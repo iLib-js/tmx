@@ -134,18 +134,23 @@ class TMX {
         this.version = 1.4;
         this.properties = {};
         this.sourceLocale = "en-US";
-        this.segmentation = "paragraph";
+        this.segtype = "paragraph";
+        this.datatype = "unknown";
 
         if (options) {
             this.properties = options.properties || this.properties;
-            this.path = options.path;
             this.sourceLocale = options.sourceLocale || this.sourceLocale;
             if (typeof(options.version) !== 'undefined') {
                 this.version = Number.parseFloat(options.version);
             }
             if (options.segmentation && (options.segmentation === "paragraph" || options.segmentation === "sentence")) {
-                this.segmentation = options.segmentation;
+                this.segtype = options.segmentation;
             }
+            [ "creationtool", "creationtoolversion", "path" ].forEach(prop => {
+                if (options[prop]) {
+                    this[prop] = options[prop];
+                }
+            });
         }
 
         // place to store the translation units
@@ -249,7 +254,7 @@ class TMX {
      */
     segmentString(string, locale) {
         if (!string) return [];
-        if (this.segmentation === "paragraph") {
+        if (this.segtype === "paragraph") {
             return [string];
         }
 
@@ -432,12 +437,12 @@ class TMX {
                 },
                 header: {
                     _attributes: {
-                        segtype: this.segmentation,
-                        creationtool: this.properties.creationtool || "loctool",
-                        creationtoolversion: this.properties.creationtoolversion || getVersion(),
+                        segtype: this.segtype,
+                        creationtool: this.creationtool || this.properties.creationtool || "loctool",
+                        creationtoolversion: this.creationtoolversion || this.properties.creationtoolversion || getVersion(),
                         adminlang: "en-US",
-                        srclang: this.locale,
-                        datatype: "unknown"
+                        srclang: this.sourceLocale,
+                        datatype: this.datatype
                     }
                 },
                 body: {
@@ -489,6 +494,18 @@ class TMX {
      * @param {Object} the parsed TMX file in json form
      */
     parse(tmx) {
+        if (tmx.header && tmx.header._attributes) {
+            const attrs = tmx.header._attributes;
+
+            [ "creationtool", "creationtoolversion", "datatype", "segtype" ].forEach(prop => {
+                if (attrs[prop]) {
+                    this[prop] = attrs[prop];
+                }
+            });
+            if (attrs.srclang) {
+                this.sourceLocale = attrs.srclang;
+            }
+        }
         if (tmx.body) {
             if (tmx.body.tu) {
                 const units = makeArray(tmx.body.tu);
@@ -502,7 +519,11 @@ class TMX {
                         const props = makeArray(unit.prop);
                         const properties = {};
                         props.forEach(prop => {
-                            properties[prop.name] = prop._text;
+                            if (prop._attributes) {
+                                properties[prop._attributes.name] = prop._text;
+                            } else {
+                                logger.warn("Found a prop tag without a name attribute");
+                            }
                         });
                         tu.addProperties(properties);
                     }
