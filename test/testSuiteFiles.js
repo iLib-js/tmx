@@ -18,5 +18,6 @@
  */
 
 export const files = [
-    "testTMX.js"
+    "testTMX.js",
+    "testTMXparse.js"
 ];

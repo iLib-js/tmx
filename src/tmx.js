@@ -42,7 +42,7 @@ function getVersion() {
 }
 
 function makeArray(arrayOrObject) {
-    return ilib.isArray(arrayOrObject) ? arrayOrObject : [ arrayOrObject ];
+    return Array.isArray(arrayOrObject) ? arrayOrObject : [ arrayOrObject ];
 }
 
 /**
@@ -485,10 +485,64 @@ class TMX {
     }
 
     /**
-     * Parse tmx 1.4 files -- not implemented yet
-     * @private
+     * Parse tmx 1.4 files
+     * @param {Object} the parsed TMX file in json form
      */
     parse(tmx) {
+        if (tmx.body) {
+            if (tmx.body.tu) {
+                const units = makeArray(tmx.body.tu);
+                for (let i = 0; i < units.length; i++) {
+                    const unit = units[i];
+                    const tu = new TranslationUnit();
+                    if (unit._attributes & unit._attributes.srclang) {
+                        tu.sourceLocale = unit._attributes.srclang;
+                    }
+                    if (unit.prop) {
+                        const props = makeArray(unit.prop);
+                        const properties = {};
+                        props.forEach(prop => {
+                            properties[prop.name] = prop._text;
+                        });
+                        tu.addProperties(properties);
+                    }
+                    if (unit.note) {
+                        tu.comment = unit.note._text;
+                    }
+                    if (unit.tuv) {
+                        const variants = makeArray(unit.tuv);
+                        variants.forEach(variant => {
+                            let locale, string;
+                            if (variant._attributes) {
+                                if (variant._attributes.lang) {
+                                    locale = variant._attributes.lang;
+                                } else if (variant._attributes["xml:lang"]) {
+                                    locale = variant._attributes["xml:lang"];
+                                }
+                            } else {
+                                logger.warn("Translation variant found without a lang or xml:lang attribute");
+                            }
+                            if (variant.seg) {
+                                string = variant.seg._text;
+                            }
+                            if (locale && string) {
+                                const variant = new TranslationVariant({
+                                    locale,
+                                    string
+                                });
+                                tu.addVariant(variant);
+                            }
+                        });
+                    }
+                    const sourceVariant = tu.getVariants().find(variant => variant.locale === this.sourceLocale);
+                    if (sourceVariant) {
+                        tu.source = sourceVariant.string;
+                        tu.sourceLocale = sourceVariant.locale;
+                    }
+                    this.tu.push(tu);
+                }
+            }
+        }
     }
 
     /**
@@ -505,10 +559,7 @@ class TMX {
             compact: true
         });
 
-    /* not implemented yet
         // logger.trace("json is " + JSON.stringify(json, undefined, 4));
-        this.ts = new TranslationSet(this.sourceLocale);
-
         if (json.tmx) {
             if (!json.tmx._attributes ||
                     !json.tmx._attributes.version ||
@@ -523,7 +574,6 @@ class TMX {
         // logger.trace("this.tu is " + JSON.stringify(this.tu, undefined, 4));
 
         return this.ts;
-    */
     }
 
     /**
