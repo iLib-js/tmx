@@ -1,25 +1,3 @@
-## Classes
-
-<dl>
-<dt><a href="#TMX">TMX</a></dt>
-<dd><p>A class that represents an tmx 1.4b file.
-See <a href="https://www.gala-global.org/tmx-14b">https://www.gala-global.org/tmx-14b</a> for details on the file format.</p>
-</dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#serializeTranslationVariant">serializeTranslationVariant(tv)</a> ⇒ <code>Object</code></dt>
-<dd><p>Return a json object that encodes the xml structure of this translation
-unit variant. This is used to convert to xml below.</p>
-</dd>
-<dt><a href="#serializeTranslationUnit">serializeTranslationUnit(tu)</a> ⇒ <code>Object</code></dt>
-<dd><p>Return a json object that encodes the xml structure of this translation
-unit. This is used to convert to xml below.</p>
-</dd>
-</dl>
-
 <a name="TMX"></a>
 
 ## TMX
@@ -42,6 +20,7 @@ See https://www.gala-global.org/tmx-14b for details on the file format.
     * [.addResource(res)](#TMX+addResource)
     * [.size()](#TMX+size) ⇒ <code>number</code>
     * [.serialize()](#TMX+serialize) ⇒ <code>String</code>
+    * [.parse(the)](#TMX+parse)
     * [.deserialize(xml)](#TMX+deserialize)
     * [.getVersion()](#TMX+getVersion) ⇒ <code>String</code>
     * [.write(targetDir)](#TMX+write)
@@ -247,6 +226,20 @@ xml text
 
 * * *
 
+<a name="TMX+parse"></a>
+
+### tmX.parse(the)
+Parse tmx 1.4 files
+
+**Kind**: instance method of [<code>TMX</code>](#TMX)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| the | <code>Object</code> | parsed TMX file in json form |
+
+
+* * *
+
 <a name="TMX+deserialize"></a>
 
 ### tmX.deserialize(xml)
@@ -285,38 +278,6 @@ Write out the tmx file to the path.
 | Param | Type | Description |
 | --- | --- | --- |
 | targetDir | <code>String</code> \| <code>undefined</code> | if the path was given as relative, then this is the directory that it is relative to. If it was given as absolute, you can pass in undefined. |
-
-
-* * *
-
-<a name="serializeTranslationVariant"></a>
-
-## serializeTranslationVariant(tv) ⇒ <code>Object</code>
-Return a json object that encodes the xml structure of this translation
-unit variant. This is used to convert to xml below.
-
-**Kind**: global function  
-**Returns**: <code>Object</code> - a json object which encodes this variant.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| tv | <code>TranslationVariant</code> | the variant to serialize |
-
-
-* * *
-
-<a name="serializeTranslationUnit"></a>
-
-## serializeTranslationUnit(tu) ⇒ <code>Object</code>
-Return a json object that encodes the xml structure of this translation
-unit. This is used to convert to xml below.
-
-**Kind**: global function  
-**Returns**: <code>Object</code> - a json object which encodes this unit.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| tu | <code>TranslationUnit</code> | the unit to serialize |
 
 
 * * *

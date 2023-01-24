@@ -51,6 +51,7 @@ function makeArray(arrayOrObject) {
  *
  * @param {TranslationVariant} tv the variant to serialize
  * @returns {Object} a json object which encodes this variant.
+ * @private
  */
 function serializeTranslationVariant(tv) {
     return {
@@ -69,6 +70,7 @@ function serializeTranslationVariant(tv) {
  *
  * @param {TranslationUnit} tu the unit to serialize
  * @returns {Object} a json object which encodes this unit.
+ * @private
  */
 function serializeTranslationUnit(tu) {
     if (!tu.variants || tu.variants.length < 2) {
@@ -492,6 +494,7 @@ class TMX {
     /**
      * Parse tmx 1.4 files
      * @param {Object} the parsed TMX file in json form
+     * @private
      */
     parse(tmx) {
         if (tmx.header && tmx.header._attributes) {
@@ -552,13 +555,12 @@ class TMX {
                                     string
                                 });
                                 tu.addVariant(variant);
+                                if (variant.locale === this.sourceLocale) {
+                                    tu.source = variant.string;
+                                    tu.sourceLocale = variant.locale;
+                                }
                             }
                         });
-                    }
-                    const sourceVariant = tu.getVariants().find(variant => variant.locale === this.sourceLocale);
-                    if (sourceVariant) {
-                        tu.source = sourceVariant.string;
-                        tu.sourceLocale = sourceVariant.locale;
                     }
                     this.tu.push(tu);
                 }
@@ -580,7 +582,6 @@ class TMX {
             compact: true
         });
 
-        // logger.trace("json is " + JSON.stringify(json, undefined, 4));
         if (json.tmx) {
             if (!json.tmx._attributes ||
                     !json.tmx._attributes.version ||
@@ -588,13 +589,11 @@ class TMX {
                 logger.error("Unknown tmx version " + json.tmx._attributes.version + ". Cannot continue parsing. Can only parse v1.4b files.");
                 return;
             }
-
+            this.tu = []; // clear any old units first
             this.parse(json.tmx);
         }
 
-        // logger.trace("this.tu is " + JSON.stringify(this.tu, undefined, 4));
-
-        return this.ts;
+        return this.tu;
     }
 
     /**
