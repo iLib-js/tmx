@@ -28,8 +28,8 @@ workflows:
       - test:
           docker_image: circleci/node:10-browsers
       - test:
-          docker_image: cimg/node:12-browsers
+          docker_image: circleci/node:12-browsers
       - test:
-          docker_image: cimg/node:14-browsers
+          docker_image: circleci/node:14-browsers
       - test:
-          docker_image: cimg/node:16-browsers
+          docker_image: circleci/node:16-browsers
