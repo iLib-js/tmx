@@ -30,9 +30,9 @@ import { Path } from 'ilib-common';
 const __dirname = Path.dirname(Path.fileUriToPath(import.meta.url));
 
 function diff(a, b) {
-    var min = Math.min(a.length, b.length);
+    const min = Math.min(a.length, b.length);
 
-    for (var i = 0; i < min; i++) {
+    for (let i = 0; i < min; i++) {
         if (a[i] !== b[i]) {
             console.log("Found difference at character " + i);
             console.log("a: " + a.substring(i));
@@ -48,7 +48,7 @@ export const testTMX = {
     testTMXConstructor: function(test) {
         test.expect(1);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         test.done();
@@ -57,7 +57,7 @@ export const testTMX = {
     testTMXConstructorIsEmpty: function(test) {
         test.expect(2);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         test.equal(tmx.size(), 0);
@@ -66,24 +66,21 @@ export const testTMX = {
     },
 
     testTMXConstructorFull: function(test) {
-        test.expect(5);
+        test.expect(4);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             properties: {
                 creationtool: "loctool",
                 "tool-name": "Localization Tool",
                 creationtoolversion: "1.2.34",
             },
-            path: "a/b/c.tmx"
         });
         test.ok(tmx);
-        var props = tmx.getProperties();
+        const props = tmx.getProperties();
 
         test.equal(props["creationtool"], "loctool");
         test.equal(props["creationtoolversion"], "1.2.34");
         test.equal(props["tool-name"], "Localization Tool");
-
-        test.equal(tmx.getPath(), "a/b/c.tmx");
 
         test.done();
     },
@@ -91,12 +88,11 @@ export const testTMX = {
     testTMXGetPath: function(test) {
         test.expect(2);
 
-        var tmx = new TMX({
-            path: "foo/bar/x.tmx"
-        });
+        const tmx = new TMX();
         test.ok(tmx);
 
-        test.equal(tmx.getPath(), "foo/bar/x.tmx");
+        tmx.setPath("test/testfiles/x.tmx");
+        test.equal(tmx.getPath(), "test/testfiles/x.tmx");
 
         test.done();
     },
@@ -104,12 +100,11 @@ export const testTMX = {
     testTMXSetPath: function(test) {
         test.expect(3);
 
-        var tmx = new TMX({
-            path: "foo/bar/x.tmx"
-        });
+        const tmx = new TMX();
         test.ok(tmx);
 
-        test.equal(tmx.getPath(), "foo/bar/x.tmx");
+        tmx.setPath("test/testfiles/x.tmx");
+        test.equal(tmx.getPath(), "test/testfiles/x.tmx");
 
         tmx.setPath("asdf/asdf/y.tmx");
 
@@ -121,7 +116,7 @@ export const testTMX = {
     testTMXSetPathInitiallyEmpty: function(test) {
         test.expect(3);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         test.ok(!tmx.getPath());
@@ -136,10 +131,10 @@ export const testTMX = {
     testTMXAddResourceString: function(test) {
         test.expect(11);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -154,17 +149,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -177,10 +172,10 @@ export const testTMX = {
     testTMXAddResourceStringWithTranslation: function(test) {
         test.expect(12);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -196,16 +191,16 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -221,10 +216,10 @@ export const testTMX = {
     testTMXAddMultipleResourceString: function(test) {
         test.expect(19);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -244,17 +239,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.ok(!units[0].comment);
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.ok(!props["x-context"]);
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -280,10 +275,10 @@ export const testTMX = {
     testTMXAddMultipleResourceStringWithTranslations: function(test) {
         test.expect(23);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -307,17 +302,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.ok(!units[0].comment);
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.ok(!props["x-context"]);
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -349,10 +344,10 @@ export const testTMX = {
     testTMXAddMultipleResourceStringSameSource: function(test) {
         test.expect(15);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -376,17 +371,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
         test.ok(!units[0].comment);
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.ok(!props["x-context"]);
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 3);
 
@@ -407,10 +402,10 @@ export const testTMX = {
     testTMXAddMultipleResourceStringSameSourceDifferentTranslation: function(test) {
         test.expect(14);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -436,16 +431,16 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "a");
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 3);
 
@@ -466,7 +461,7 @@ export const testTMX = {
     testTMXAddResourceStringNotSourceLocale: function(test) {
         test.expect(3);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             locale: "en-US"
         });
         test.ok(tmx);
@@ -485,7 +480,7 @@ export const testTMX = {
 
         // should reject it. Only units with the source
         // locale of en-US go in this tmx
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 0);
 
@@ -495,10 +490,10 @@ export const testTMX = {
     testTMXAddMultipleResourceStringHandleDups: function(test) {
         test.expect(14);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -522,7 +517,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
@@ -530,12 +525,12 @@ export const testTMX = {
 
         test.equal(units[0].source, "Asdf asdf");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.ok(!props["x-context"]);
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -551,10 +546,10 @@ export const testTMX = {
     testTMXAddResourceArray: function(test) {
         test.expect(25);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        const res = new ResourceArray({
             sourceArray: [
                 "a",
                 "b",
@@ -573,19 +568,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 3);
 
         test.equal(units[0].source, "a");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -616,10 +611,10 @@ export const testTMX = {
     testTMXAddResourceArrayWithTranslations: function(test) {
         test.expect(31);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        const res = new ResourceArray({
             sourceArray: [
                 "a",
                 "b",
@@ -644,19 +639,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 3);
 
         test.equal(units[0].source, "a");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -696,10 +691,10 @@ export const testTMX = {
     testTMXAddResourceArrayMultiple: function(test) {
         test.expect(31);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        let res = new ResourceArray({
             sourceArray: [
                 "a",
                 "b",
@@ -737,17 +732,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 6);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -795,10 +790,10 @@ export const testTMX = {
     testTMXAddResourceArrayMultipleWithTranslations: function(test) {
         test.expect(43);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        let res = new ResourceArray({
             sourceArray: [
                 "a",
                 "b",
@@ -848,17 +843,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 6);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -924,10 +919,10 @@ export const testTMX = {
     testTMXAddResourceArrayMultipleWithTranslationsAndOverlappingSources: function(test) {
         test.expect(43);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        let res = new ResourceArray({
             sourceArray: [
                 "a",
                 "b",
@@ -977,19 +972,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "a");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 3);
 
@@ -1047,10 +1042,10 @@ export const testTMX = {
     testTMXAddResourcePlural: function(test) {
         test.expect(19);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other string"
@@ -1068,19 +1063,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].sourceLocale, "en-US");
         test.equal(units[0].source, "one string");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1103,10 +1098,10 @@ export const testTMX = {
     testTMXAddResourcePluralWithTranslations: function(test) {
         test.expect(23);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other string"
@@ -1129,19 +1124,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "one string");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -1169,10 +1164,10 @@ export const testTMX = {
     testTMXAddResourcePluralMultiple: function(test) {
         test.expect(31);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        let res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other strings"
@@ -1208,19 +1203,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "one string");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1260,10 +1255,10 @@ export const testTMX = {
     testTMXAddResourcePluralMultipleWithMoreTranslations: function(test) {
         test.expect(33);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        let res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other strings"
@@ -1310,17 +1305,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -1369,10 +1364,10 @@ export const testTMX = {
     testTMXAddResourcePluralMultipleWithLessTranslations: function(test) {
         test.expect(21);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        let res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other strings"
@@ -1417,17 +1412,17 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -1456,10 +1451,10 @@ export const testTMX = {
     testTMXAddResourcePluralMultipleWithTranslationsAndOverlappingSources: function(test) {
         test.expect(27);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        let res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other strings"
@@ -1505,18 +1500,18 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 3);
 
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
         // the "one" string shares some translations and the "other" string doesn't
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 3);
 
@@ -1555,10 +1550,10 @@ export const testTMX = {
     testTMXSerializeStringMultipleWithTranslations: function(test) {
         test.expect(2);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1575,7 +1570,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var res = new ResourceString({
+        res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1592,8 +1587,8 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var actual = tmx.serialize();
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
+        const actual = tmx.serialize();
+        const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
             '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
             '  <body>\n' +
@@ -1622,10 +1617,10 @@ export const testTMX = {
     testTMXSerializeString: function(test) {
         test.expect(2);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1649,8 +1644,8 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var actual = tmx.serialize();
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
+        const actual = tmx.serialize();
+        const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
             '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
             '  <body>\n' +
@@ -1684,10 +1679,10 @@ export const testTMX = {
     testTMXSerializeComplex: function(test) {
         test.expect(2);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1699,7 +1694,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var res = new ResourcePlural({
+        res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other strings"
@@ -1722,7 +1717,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var res = new ResourceArray({
+        res = new ResourceArray({
             sourceArray: [
                 "a",
                 "b",
@@ -1747,8 +1742,8 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var actual = tmx.serialize();
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
+        const actual = tmx.serialize();
+        const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
             '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
             '  <body>\n' +
@@ -1828,12 +1823,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceSource: function(test) {
         test.expect(23);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "This is a test. This is only a test.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1848,19 +1843,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1875,7 +1870,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1888,12 +1883,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceSourceTricky: function(test) {
         test.expect(23);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "I would like to see Dr. Smith in the U.S. not someone else. Please arrange that.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1908,19 +1903,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "I would like to see Dr. Smith in the U.S. not someone else.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1935,7 +1930,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1948,12 +1943,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceSourceOnlyOneSentence: function(test) {
         test.expect(13);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "This is a test.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -1968,19 +1963,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -1993,12 +1988,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTarget: function(test) {
         test.expect(27);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "This is a test. This is only a test.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2015,19 +2010,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2045,7 +2040,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2061,12 +2056,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetJapanese: function(test) {
         test.expect(27);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "This is a test. This is only a test.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2083,19 +2078,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2113,7 +2108,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2129,12 +2124,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetOnlyOneSentence: function(test) {
         test.expect(15);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "This is a test.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2151,19 +2146,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 1);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        const variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2179,12 +2174,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceArray: function(test) {
         test.expect(23);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        const res = new ResourceArray({
             sourceArray: [
                 "This is a test. This is only a test."
             ],
@@ -2201,19 +2196,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -2228,7 +2223,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -2241,12 +2236,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetArray: function(test) {
         test.expect(27);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        const res = new ResourceArray({
             sourceArray: [
                 "This is a test. This is only a test."
             ],
@@ -2267,19 +2262,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2297,7 +2292,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2313,12 +2308,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetArrayMultiple: function(test) {
         test.expect(51);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceArray({
+        const res = new ResourceArray({
             sourceArray: [
                 "This is a test. This is only a test.",
                 "Yet another test. Another test."
@@ -2341,19 +2336,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2371,7 +2366,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2423,12 +2418,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentencePlural: function(test) {
         test.expect(23);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourcePlurals: {
                 other: "This is a test. This is only a test."
             },
@@ -2445,19 +2440,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -2472,7 +2467,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -2485,12 +2480,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetPlural: function(test) {
         test.expect(27);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourcePlurals: {
                 "other": "This is a test. This is only a test."
             },
@@ -2511,19 +2506,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2541,7 +2536,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2557,12 +2552,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetPluralMultiple: function(test) {
         test.expect(51);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourcePlurals: {
                 one: "This is a test. This is only a test.",
                 other: "Yet another test. Another test."
@@ -2585,19 +2580,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2615,7 +2610,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2667,12 +2662,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetPluralLessCategories: function(test) {
         test.expect(47);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourcePlurals: {
                 one: "This is a test. This is only a test.",
                 other: "Yet another test. Another test."
@@ -2694,19 +2689,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -2721,7 +2716,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
@@ -2770,12 +2765,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetPluralMoreCategories: function(test) {
         test.expect(55);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourcePlural({
+        const res = new ResourcePlural({
             sourcePlurals: {
                 one: "This is a test. This is only a test.",
                 other: "These are some tests. These are only some tests."
@@ -2799,19 +2794,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2829,7 +2824,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -2887,13 +2882,12 @@ export const testTMX = {
     testTMXWrite: function(test) {
         test.expect(4);
 
-        var tmx = new TMX({
-            path: "./test/output.tmx",
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf. Foobar foo.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2905,7 +2899,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var res = new ResourcePlural({
+        res = new ResourcePlural({
             sourceStrings: {
                 one: "one string",
                 other: "other strings"
@@ -2928,7 +2922,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var res = new ResourceArray({
+        res = new ResourceArray({
             sourceArray: [
                 "A b cee. E f g.",
                 "b",
@@ -2953,7 +2947,7 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var base = __dirname;
+        const base = __dirname;
 
         if (fs.existsSync(path.join(base, "testfiles/test/output.tmx"))) {
             fs.unlinkSync(path.join(base, "testfiles/test/output.tmx"));
@@ -2961,12 +2955,13 @@ export const testTMX = {
 
         test.ok(!fs.existsSync(path.join(base, "testfiles/test/output.tmx")));
 
+        tmx.setPath("./test/output.tmx");
         tmx.write(path.join(base, "testfiles"));
 
         test.ok(fs.existsSync(path.join(base, "testfiles/test/output.tmx")));
 
-        var actual = fs.readFileSync(path.join(base, "testfiles/test/output.tmx"), "utf-8");
-        var expected =
+        const actual = fs.readFileSync(path.join(base, "testfiles/test/output.tmx"), "utf-8");
+        const expected =
             '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
             '  <header segtype="sentence" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
@@ -3067,12 +3062,12 @@ export const testTMX = {
     testTMXAddResourceSegmentSentenceTargetSpecial: function(test) {
         test.expect(27);
 
-        var tmx = new TMX({
+        const tmx = new TMX({
             segmentation: "sentence"
         });
         test.ok(tmx);
 
-        var res = new ResourceString({
+        const res = new ResourceString({
             source: "The SignRequest subdomain cannot be changed. If you need a different domain you can create a new team.",
             sourceLocale: "en-US",
             key: "foobar",
@@ -3089,19 +3084,19 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var units = tmx.getTranslationUnits();
+        const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "The SignRequest subdomain cannot be changed.");
         test.equal(units[0].sourceLocale, "en-US");
-        var props = units[0].getProperties();
+        let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[0].getVariants();
+        let variants = units[0].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -3119,7 +3114,7 @@ export const testTMX = {
         test.equal(props["x-context"], "asdf");
         test.equal(props["x-flavor"], "chocolate");
 
-        var variants = units[1].getVariants();
+        variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
@@ -3135,10 +3130,10 @@ export const testTMX = {
     testTMXSerializeStringDontSerializeUnitsWithNoTranslations: function(test) {
         test.expect(2);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
-        var res = new ResourceString({
+        let res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -3174,8 +3169,8 @@ export const testTMX = {
 
         tmx.addResource(res);
 
-        var actual = tmx.serialize();
-        var expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
+        const actual = tmx.serialize();
+        const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
             '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
             '  <body>\n' +
