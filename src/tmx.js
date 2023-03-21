@@ -662,6 +662,10 @@ class TMX {
 
     /**
      * Return the difference in variants between the two translation units.
+     * This only finds the new and changed variants in tu2, not deleted ones.
+     * The reason is that translation memories are supersets of all of the
+     * translations, so we don't really care about deletions.
+     *
      * @param {TranslationUnit} tu1 the first translation unit to compare
      * @param {TranslationUnit} tu2 the second translation unit to compare
      * @returns {Array.<TranslationVariant>} the array of translation variants
@@ -675,20 +679,20 @@ class TMX {
         });
 
         const variants2 = tu2.getVariants();
-        let variantHash2 = {};
-        variants2.forEach(variant => {
-            variantHash2[variant.hashKey()] = variant;
-        });
 
         // return all variants that exist in tu1 but not in tu2 or that
         // exist in tu2 but not in tu1
-        return variants1.filter(variant => !variantHash2[variant.hashKey()]).
-            concat(variants2.filter(variant => !variantHash1[variant.hashKey()]));
+        return variants2.filter(variant => !variantHash1[variant.hashKey()]);
     }
 
     /**
      * Compare the other TMX instance with the current one and return a new TMX
-     * instance with the difference.
+     * instance with the difference. This method only handles the difference
+     * from the current tmx to the other tmx. That is, it handles changes and
+     * additions in the other tmx, but not deletions from the current tmx. For
+     * translation memories, the result should be a superset of translations
+     * that are possible for the source text so deletions are not necessary.
+     *
      * @param {TMX} other the other tmx file to compare to
      * @returns {TMX} the difference from the current tmx to the other one
      */
@@ -701,17 +705,18 @@ class TMX {
             creationtoolversion: this.creationtoolversion
         });
 
-        this.tu.forEach(tu => {
+        other.tu.forEach(tu => {
             const hash = tu.hashKey();
-            const othertu = other.tuhash[hash];
-            if (othertu) {
-                // the current tu exists in both the current tmx and
+            const thistu = this.tuhash[hash];
+
+            if (thistu) {
+                // the tu exists in both the current tmx and
                 // the other tmx with the same info. That means we normally
                 // wouldn't add the tu to the diff. But, it is still possible that
                 // the variants are different. If the variants turn out to be
                 // different, then we still need to copy the tu to the tmx diff
                 // anyways so that it can contain the difference in the variants.
-                let variantdiff = this.variantDiff(tu, othertu);
+                let variantdiff = this.variantDiff(thistu, tu);
 
                 if (variantdiff.length) {
                     const newTu = new TranslationUnit({
@@ -721,23 +726,17 @@ class TMX {
                         targetLocale: tu.targetLocale,
                         datatype: tu.datatype
                     });
+                    // always have to have the source variant, or else the trans unit
+                    // will have nothing to match against
+                    newTu.addVariant(new TranslationVariant({
+                        string: tu.source,
+                        locale: tu.sourceLocale
+                    }));
                     newTu.addVariants(variantdiff);
                     difftmx.addTranslationUnit(newTu);
                 } // else no diff so don't add the tu to the diff
             } else {
                 // doesn't exist in the other tmx, so we add it to the diff
-                difftmx.addTranslationUnit(tu);
-            }
-        });
-
-        other.tu.forEach(tu => {
-            const hash = tu.hashKey();
-            const thistu = this.tuhash[hash];
-            // We don't need to handle the situation where the tu exists in
-            // both this and the other tmx because it is handled in the loop
-            // above where we check the variants. That means we only need to
-            // add it to the diff if it doesn't exist in the current tmx.
-            if (!thistu) {
                 difftmx.addTranslationUnit(tu);
             }
         });

@@ -224,7 +224,7 @@ export const testTMXdiff = {
     },
 
     testTMXDiffAdditionalVariantRightContentsInTarget: function(test) {
-        test.expect(12);
+        test.expect(14);
 
         const tmx1 = new TMX();
         test.ok(tmx1);
@@ -269,9 +269,13 @@ export const testTMXdiff = {
         const variants = units[0].getVariants();
         test.ok(variants);
         test.ok(Array.isArray(variants));
-        test.equal(variants.length, 1);
-        test.equal(variants[0].locale, "fr-FR");
-        test.equal(variants[0].string, "un deux trois");
+        test.equal(variants.length, 2);
+
+        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].string, "Asdf asdf");
+
+        test.equal(variants[1].locale, "fr-FR");
+        test.equal(variants[1].string, "un deux trois");
 
         test.done();
     },
@@ -308,15 +312,17 @@ export const testTMXdiff = {
         });
         tmx1.addResource(res);
 
+        // we don't care about deletions from the current to the new tmx,
+        // only additions and changes
         const d = tmx1.diff(tmx2);
         test.ok(d);
-        test.equal(d.size(), 1);
+        test.equal(d.size(), 0);
 
         test.done();
     },
 
     testTMXDiffAdditionalStringRightContentsInSource: function(test) {
-        test.expect(14);
+        test.expect(5);
 
         const tmx1 = new TMX();
         test.ok(tmx1);
@@ -349,21 +355,12 @@ export const testTMXdiff = {
 
         const d = tmx1.diff(tmx2);
 
+        // we don't care about deletions from the current to the new tmx,
+        // only additions and changes
         const units = d.getTranslationUnits();
         test.ok(units);
         test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
-        test.equal(units[0].sourceLocale, "en-US");
-        test.equal(units[0].source, "foobar foo");
-
-        const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
-        test.equal(variants[0].string, "foobar foo");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "das foobar");
+        test.equal(units.length, 0);
 
         test.done();
     },
@@ -400,15 +397,17 @@ export const testTMXdiff = {
         });
         tmx1.addResource(res);
 
+        // we don't care about deletions from the current to the new tmx,
+        // only additions and changes
         const d = tmx1.diff(tmx2);
         test.ok(d);
-        test.equal(d.size(), 1);
+        test.equal(d.size(), 0);
 
         test.done();
     },
 
     testTMXDiffAdditionalVariantRightContentsInSource: function(test) {
-        test.expect(12);
+        test.expect(5);
 
         const tmx1 = new TMX();
         test.ok(tmx1);
@@ -444,18 +443,7 @@ export const testTMXdiff = {
         const units = d.getTranslationUnits();
         test.ok(units);
         test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
-
-        // source is the same, but the variants differ
-        test.equal(units[0].sourceLocale, "en-US");
-        test.equal(units[0].source, "Asdf asdf");
-
-        const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 1);
-        test.equal(variants[0].locale, "fr-FR");
-        test.equal(variants[0].string, "un deux trois");
+        test.equal(units.length, 0);
 
         test.done();
     },

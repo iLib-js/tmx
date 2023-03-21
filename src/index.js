@@ -19,6 +19,4 @@
 
 import TMX from './tmx.js';
 
-export default {
-    TMX
-};
+export default TMX;
