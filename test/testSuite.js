@@ -35,6 +35,8 @@ files.forEach(path => {
             for (let suite in test) {
                 modules[suite] = test[suite];
             }
+        }).catch(e => {
+            console.log(e);
         });
     });
 });

@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import path from 'node:path';
-import fs from 'node:fs';
+import * as path from 'path';
+import * as fs from 'fs';
 import TMX from '../src/tmx.js';
 import { Path } from 'ilib-common';
 

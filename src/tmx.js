@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import fs from 'node:fs';
+import fs from 'fs';
 
 import log4js from "@log4js-node/log4js-api";
 import xmljs from 'xml-js';

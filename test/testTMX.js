@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import path from 'node:path';
-import fs from 'node:fs';
+import path from 'path';
+import fs from 'fs';
 import TMX from '../src/tmx.js';
 import {
     ResourceString,
