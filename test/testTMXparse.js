@@ -17,17 +17,17 @@
  * limitations under the License.
  */
 
-import path from 'node:path';
-import fs from 'node:fs';
+import * as path from 'path';
+import * as fs from 'fs';
 import TMX from '../src/tmx.js';
 import { Path } from 'ilib-common';
 
 const __dirname = Path.dirname(Path.fileUriToPath(import.meta.url));
 
 function diff(a, b) {
-    var min = Math.min(a.length, b.length);
+    const min = Math.min(a.length, b.length);
 
-    for (var i = 0; i < min; i++) {
+    for (let i = 0; i < min; i++) {
         if (a[i] !== b[i]) {
             console.log("Found difference at character " + i);
             console.log("a: " + a.substring(i));
@@ -41,7 +41,7 @@ export const testTMXparse = {
     testTMXParse: function(test) {
         test.expect(4);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -73,7 +73,7 @@ export const testTMXparse = {
     testTMXParseRightUnits: function(test) {
         test.expect(10);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -116,7 +116,7 @@ export const testTMXparse = {
     testTMXParseManyVariants: function(test) {
         test.expect(14);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -171,7 +171,7 @@ export const testTMXparse = {
     testTMXParseHeaders: function(test) {
         test.expect(6);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -206,7 +206,7 @@ export const testTMXparse = {
     testTMXParseProperties: function(test) {
         test.expect(3);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -241,7 +241,7 @@ export const testTMXparse = {
     testTMXParseNotes: function(test) {
         test.expect(3);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -273,7 +273,7 @@ export const testTMXparse = {
     testTMXParseDifferentVersion: function(test) {
         test.expect(4);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -306,7 +306,7 @@ export const testTMXparse = {
     testTMXParseMultipleUnits: function(test) {
         test.expect(18);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -371,7 +371,7 @@ export const testTMXparse = {
     testTMXParseNoTranslations: function(test) {
         test.expect(8);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
@@ -408,7 +408,7 @@ export const testTMXparse = {
     testTMXParseLangAttrs: function(test) {
         test.expect(10);
 
-        var tmx = new TMX();
+        const tmx = new TMX();
         test.ok(tmx);
 
         const xml = `
