@@ -29,6 +29,9 @@ import cldrSegmentation from "cldr-segmentation";
 const logger = log4js.getLogger("ilib-tmx.tmx");
 const __dirname = Path.dirname(Path.fileUriToPath(import.meta.url));
 
+/**
+ * @private
+ */
 function versionString(num) {
     const parts = ("" + num).split(".");
     const integral = parts[0].toString();
@@ -36,11 +39,17 @@ function versionString(num) {
     return integral + '.' + fraction;
 }
 
+/**
+ * @private
+ */
 function getVersion() {
     const pkg = JSON.parse(fs.readFileSync(Path.join(__dirname, "..", "package.json"), "utf-8"));
     return pkg ? pkg.version : undefined;
 }
 
+/**
+ * @private
+ */
 function makeArray(arrayOrObject) {
     return Array.isArray(arrayOrObject) ? arrayOrObject : [ arrayOrObject ];
 }
@@ -158,6 +167,11 @@ class TMX {
         // place to store the translation units
         this.tu = [];
         this.tuhash = {};
+
+        // if the file path was specified, load in the file
+        if (this.path) {
+            this.load();
+        }
     }
 
     /**
@@ -205,7 +219,7 @@ class TMX {
     /**
      * Get the translation units in this tmx.
      *
-     * @returns {Array.<Object>} the translation units in this tmx
+     * @returns {Array.<TranslationUnit>} the translation units in this tmx
      */
     getTranslationUnits() {
         return this.tu;
@@ -221,9 +235,9 @@ class TMX {
 
         const hashKey = unit.hashKey();
 
-        if (this.tuhash[hashKey]) {
+        const existing = this.tuhash[hashKey];
+        if (existing) {
             // existing string, so merge in this unit
-            const existing = this.tuhash[hashKey];
             existing.addVariants(unit.getVariants());
         } else {
             // new string
@@ -236,7 +250,7 @@ class TMX {
     /**
      * Add translation units to this tmx.
      *
-     * @param {Array.<Object>} files the translation units to add to this tmx
+     * @param {Array.<TranslationUnit>} units the translation units to add to this tmx
      */
     addTranslationUnits(units) {
         units.forEach(unit => {
@@ -594,6 +608,15 @@ class TMX {
         }
 
         return this.tu;
+    }
+
+    /**
+     * Load and deserialize the current tmx file into memory.
+     */
+    load() {
+        if (!this.path) return; // can't load nothing!
+        const data = fs.readFileSync(this.path, "utf-8");
+        this.deserialize(data);
     }
 
     /**
