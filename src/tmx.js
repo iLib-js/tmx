@@ -591,7 +591,7 @@ class TMX {
                             }
                         });
                     }
-                    this.tu.push(tu);
+                    this.addTranslationUnit(tu);
                 }
             }
         }
@@ -619,6 +619,7 @@ class TMX {
                 return;
             }
             this.tu = []; // clear any old units first
+            this.tuhash = {};
             this.parse(json.tmx);
         }
 
@@ -657,6 +658,107 @@ class TMX {
         const dir = Path.dirname(fullpath);
         makeDirs(dir);
         fs.writeFileSync(fullpath, this.serialize(), "utf-8");
+    }
+
+    /**
+     * Return the difference in variants between the two translation units.
+     * @param {TranslationUnit} tu1 the first translation unit to compare
+     * @param {TranslationUnit} tu2 the second translation unit to compare
+     * @returns {Array.<TranslationVariant>} the array of translation variants
+     * that forms the diff of the two translation units.
+     */
+     variantDiff(tu1, tu2) {
+        const variants1 = tu1.getVariants();
+        let variantHash1 = {};
+        variants1.forEach(variant => {
+            variantHash1[variant.hashKey()] = variant;
+        });
+
+        const variants2 = tu2.getVariants();
+        let variantHash2 = {};
+        variants2.forEach(variant => {
+            variantHash2[variant.hashKey()] = variant;
+        });
+
+        // return all variants that exist in tu1 but not in tu2 or that
+        // exist in tu2 but not in tu1
+        return variants1.filter(variant => !variantHash2[variant.hashKey()]).
+            concat(variants2.filter(variant => !variantHash1[variant.hashKey()]));
+    }
+
+    /**
+     * Compare the other TMX instance with the current one and return a new TMX
+     * instance with the difference.
+     * @param {TMX} other the other tmx file to compare to
+     * @returns {TMX} the difference from the current tmx to the other one
+     */
+    diff(other) {
+        const difftmx = new TMX({
+            sourceLocale: this.sourceLocale,
+            version: this.version,
+            segmentation: this.segtype,
+            creationtool: this.creationtool,
+            creationtoolversion: this.creationtoolversion
+        });
+
+        this.tu.forEach(tu => {
+            const hash = tu.hashKey();
+            const othertu = other.tuhash[hash];
+            if (othertu) {
+                // the current tu exists in both the current tmx and
+                // the other tmx with the same info. That means we normally
+                // wouldn't add the tu to the diff. But, it is still possible that
+                // the variants are different. If the variants turn out to be
+                // different, then we still need to copy the tu to the tmx diff
+                // anyways so that it can contain the difference in the variants.
+                let variantdiff = this.variantDiff(tu, othertu);
+
+                if (variantdiff.length) {
+                    const newTu = new TranslationUnit({
+                        source: tu.source,
+                        sourceLocale: tu.sourceLocale,
+                        target: tu.target,
+                        targetLocale: tu.targetLocale,
+                        datatype: tu.datatype
+                    });
+                    newTu.addVariants(variantdiff);
+                    difftmx.addTranslationUnit(newTu);
+                } // else no diff so don't add the tu to the diff
+            } else {
+                // doesn't exist in the other tmx, so we add it to the diff
+                difftmx.addTranslationUnit(tu);
+            }
+        });
+
+        other.tu.forEach(tu => {
+            const hash = tu.hashKey();
+            const thistu = this.tuhash[hash];
+            // We don't need to handle the situation where the tu exists in
+            // both this and the other tmx because it is handled in the loop
+            // above where we check the variants. That means we only need to
+            // add it to the diff if it doesn't exist in the current tmx.
+            if (!thistu) {
+                difftmx.addTranslationUnit(tu);
+            }
+        });
+
+        return difftmx;
+    }
+
+    /**
+     *
+     * @param {String} type the type of split to perform
+     * @returns {Array.<TMX>} an array of tmx files split in the requested fashion
+     */
+    split(type) {
+    }
+
+    /**
+     *
+     * @param {Array.<TMX>} tmxs an array of tmx files to merge together
+     * @returns {TMX} the merged tmx file
+     */
+    merge(tmxs) {
     }
 }
 
