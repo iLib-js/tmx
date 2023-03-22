@@ -681,8 +681,8 @@ class TMX {
 
         const variants2 = tu2.getVariants();
 
-        // return all variants that exist in tu1 but not in tu2 or that
-        // exist in tu2 but not in tu1
+        // return all variants that exist in tu2 but not in tu1. Changed
+        // translation variants will appear as new variants.
         return variants2.filter(variant => !variantHash1[variant.hashKey()]);
     }
 
@@ -701,9 +701,9 @@ class TMX {
         const difftmx = new TMX({
             sourceLocale: this.sourceLocale,
             version: this.version,
-            segmentation: this.segtype,
-            creationtool: this.creationtool,
-            creationtoolversion: this.creationtoolversion
+            segmentation: this.properties.segtype,
+            creationtool: this.properties.creationtool,
+            creationtoolversion: this.properties.creationtoolversion
         });
 
         other.tu.forEach(tu => {
@@ -737,7 +737,7 @@ class TMX {
                     difftmx.addTranslationUnit(newTu);
                 } // else no diff so don't add the tu to the diff
             } else {
-                // doesn't exist in the other tmx, so we add it to the diff
+                // doesn't exist in the current tmx, so we add it to the diff
                 difftmx.addTranslationUnit(tu);
             }
         });
