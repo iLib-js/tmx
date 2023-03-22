@@ -108,6 +108,8 @@ function serializeTranslationUnit(tu) {
     return retval;
 };
 
+const headerAttrs = [ "segtype", "creationtool", "creationtoolversion", "adminlang", "srclang", "datatype" ];
+
 /**
  * @class A class that represents an tmx 1.4b file.
  * See https://www.gala-global.org/tmx-14b for details on the file format.
@@ -132,6 +134,7 @@ class TMX {
      *         of this loctool
      *     <li><i>originalFormat</i> - the format of the data before it was transformed into tmx. That can be any
      *         string.
+     *     <li><i>datatype</i> - the data type of the strings that these translations originally came from
      *   </ul>
      * <li><i>segmentation</i> - How the strings should be segmented. Choices are "paragraph" and "sentence."
      * Default is "paragraph". The tmx settings of "block" and "phrase" are not yet supported.
@@ -143,10 +146,11 @@ class TMX {
      */
     constructor(options) {
         this.version = 1.4;
-        this.properties = {};
+        this.properties = {
+            datatype: "unknown",
+            segtype: "paragraph"
+        };
         this.sourceLocale = "en-US";
-        this.segtype = "paragraph";
-        this.datatype = "unknown";
 
         if (options) {
             this.properties = options.properties || this.properties;
@@ -155,11 +159,14 @@ class TMX {
                 this.version = Number.parseFloat(options.version);
             }
             if (options.segmentation && (options.segmentation === "paragraph" || options.segmentation === "sentence")) {
-                this.segtype = options.segmentation;
+                this.properties.segtype = options.segmentation;
             }
-            [ "creationtool", "creationtoolversion", "path" ].forEach(prop => {
-                if (options[prop]) {
-                    this[prop] = options[prop];
+            if (options.path) {
+                this.path = options.path;
+            }
+            headerAttrs.forEach(prop => {
+                if (options[prop] || (options.properties && options.properties[prop])) {
+                    this.properties[prop] = options[prop] || (options.properties && options.properties[prop]);
                 }
             });
         }
@@ -259,6 +266,14 @@ class TMX {
     }
 
     /**
+     * Return the segmentation type of this tmx file.
+     * @returns {String} the name of the segmentation type of this string
+     */
+    getSegmentationType() {
+        return this.properties.segtype;
+    }
+
+    /**
      * Segment a string according to the rules for the locale, and the style
      * set for this tmx object, either "paragraph" or "sentence", and return
      * an array of segments.
@@ -270,7 +285,7 @@ class TMX {
      */
     segmentString(string, locale) {
         if (!string) return [];
-        if (this.segtype === "paragraph") {
+        if (this.properties.segtype === "paragraph") {
             return [string];
         }
 
@@ -453,12 +468,12 @@ class TMX {
                 },
                 header: {
                     _attributes: {
-                        segtype: this.segtype,
-                        creationtool: this.creationtool || this.properties.creationtool || "loctool",
-                        creationtoolversion: this.creationtoolversion || this.properties.creationtoolversion || getVersion(),
+                        segtype: this.properties.segtype,
+                        creationtool: this.properties.creationtool || "loctool",
+                        creationtoolversion: this.properties.creationtoolversion || getVersion(),
                         adminlang: "en-US",
                         srclang: this.sourceLocale,
-                        datatype: this.datatype
+                        datatype: this.properties.datatype
                     }
                 },
                 body: {
@@ -471,7 +486,7 @@ class TMX {
         }
 
         const props = Object.keys(this.properties).forEach(prop => {
-            if (prop !== "creationtool" && prop !== "creationtoolversion") {
+            if (headerAttrs.indexOf(prop) < 0) {
                 if (!json.tmx.header.prop) {
                     json.tmx.header.prop = [];
                 }
@@ -514,9 +529,9 @@ class TMX {
         if (tmx.header && tmx.header._attributes) {
             const attrs = tmx.header._attributes;
 
-            [ "creationtool", "creationtoolversion", "datatype", "segtype" ].forEach(prop => {
+            headerAttrs.forEach(prop => {
                 if (attrs[prop]) {
-                    this[prop] = attrs[prop];
+                    this.properties[prop] = attrs[prop];
                 }
             });
             if (attrs.srclang) {
@@ -537,7 +552,7 @@ class TMX {
                         const properties = {};
                         props.forEach(prop => {
                             if (prop._attributes) {
-                                properties[prop._attributes.name] = prop._text;
+                                properties[prop._attributes.type] = prop._text;
                             } else {
                                 logger.warn("Found a prop tag without a name attribute");
                             }
