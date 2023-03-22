@@ -670,6 +670,7 @@ class TMX {
      * @param {TranslationUnit} tu2 the second translation unit to compare
      * @returns {Array.<TranslationVariant>} the array of translation variants
      * that forms the diff of the two translation units.
+     * @private
      */
      variantDiff(tu1, tu2) {
         const variants1 = tu1.getVariants();
