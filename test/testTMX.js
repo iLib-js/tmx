@@ -1547,6 +1547,384 @@ export const testTMX = {
         test.done();
     },
 
+    testTMXDeserializeSimple: function(test) {
+        test.expect(1);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+
+        test.done();
+    },
+
+    testTMXDeserializeSimpleRightTransUnits: function(test) {
+        test.expect(6);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 1);
+
+        test.equal(units[0].source, "Asdf asdf");
+        test.equal(units[0].sourceLocale, "en-US");
+
+        test.done();
+    },
+
+    testTMXDeserializeSimpleRightVariants: function(test) {
+        test.expect(11);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 1);
+
+        const variants = units[0].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+
+        test.equal(variants[0].string, "Asdf asdf");
+        test.equal(variants[0].locale, "en-US");
+
+        test.equal(variants[1].string, "eins zwei drei");
+        test.equal(variants[1].locale, "de-DE");
+
+        test.done();
+    },
+
+    testTMXDeserializeSimpleHeaderProperties: function(test) {
+        test.expect(8);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+        test.equal(tmx.getSegmentationType(), "paragraph");
+
+        const tmxprops = tmx.getProperties();
+        test.ok(tmxprops);
+        test.equal(tmxprops["creationtool"], "loctool");
+        test.equal(tmxprops["creationtoolversion"], "2.20.2");
+        test.equal(tmxprops["adminlang"], "en-US");
+        test.equal(tmxprops["srclang"], "en-US");
+        test.equal(tmxprops["datatype"], "javascript");
+
+        test.done();
+    },
+
+    testTMXDeserializeSimpleTransUnitProperties: function(test) {
+        test.expect(6);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 1);
+
+        const props = units[0].getProperties();
+        test.ok(props);
+        test.equal(props["x-project"], "webapp");
+
+        test.done();
+    },
+
+    testTMXDeserializeStringMultipleWithTranslations: function(test) {
+        test.expect(1);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>one string</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eine Zeichenfolge</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>other strings</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>mehrere Zeichenfolge</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>a</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>x</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>b</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>y</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>c</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>z</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 6);
+
+        test.done();
+    },
+
+    testTMXDeserializeStringMultipleWithTranslationsRightContents: function(test) {
+        test.expect(6);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>one string</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eine Zeichenfolge</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>other strings</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>mehrere Zeichenfolge</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>a</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>x</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>b</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>y</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en-US">\n' +
+            '      <prop type="x-context">asdf</prop>\n' +
+            '      <prop type="x-flavor">chocolate</prop>\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en-US">\n' +
+            '        <seg>c</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>z</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 6);
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 6);
+
+        let actual = units.map(tu => [tu.source, tu.sourceLocale]);
+        let expected = [
+            ["Asdf asdf", "en-US"],
+            ["one string", "en-US"],
+            ["other strings", "en-US"],
+            ["a", "en-US"],
+            ["b", "en-US"],
+            ["c", "en-US"]
+        ];
+        test.equalIgnoringOrder(actual, expected);
+
+        actual = units.map(tu => {
+            const variants = tu.getVariants();
+            return variants.map(variant => [variant.string, variant.locale]);
+        });
+        expected = [
+            [["Asdf asdf", "en-US"], ["eins zwei drei", "de-DE"]],
+            [["one string", "en-US"], ["eine Zeichenfolge", "de-DE"]],
+            [["other strings", "en-US"], ["mehrere Zeichenfolge", "de-DE"]],
+            [["a", "en-US"], ["x", "de-DE"]],
+            [["b", "en-US"], ["y", "de-DE"]],
+            [["c", "en-US"], ["z", "de-DE"]]
+        ];
+        test.equalIgnoringOrder(actual, expected);
+
+        test.done();
+    },
+
     testTMXSerializeStringMultipleWithTranslations: function(test) {
         test.expect(2);
 

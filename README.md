@@ -25,6 +25,11 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.1.0
+
+- bug fix: was not parsing the header or the translation unit properties
+  properly during deserialization
+
 ### v1.0.0
 
 - initial version copied from loctool 2.18.0

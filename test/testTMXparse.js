@@ -50,7 +50,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -82,7 +82,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -125,7 +125,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>one two three</seg>
                   </tuv>
@@ -169,7 +169,7 @@ export const testTMXparse = {
     },
 
     testTMXParseHeaders: function(test) {
-        test.expect(6);
+        test.expect(8);
 
         const tmx = new TMX();
         test.ok(tmx);
@@ -180,8 +180,8 @@ export const testTMXparse = {
               <header segtype="asdf" creationtool="mytool" creationtoolversion="1.2.3" adminlang="en-US" srclang="de-DE" datatype="golang"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
-                  <prop name="datatype">java</prop>
+                  <prop type="x-project">webapp</prop>
+                  <prop type="datatype">java</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -193,12 +193,16 @@ export const testTMXparse = {
             </tmx>`;
 
         tmx.deserialize(xml);
+        const props = tmx.getProperties();
 
-        test.equal(tmx.segtype, "asdf");
-        test.equal(tmx.creationtool, "mytool");
-        test.equal(tmx.creationtoolversion, "1.2.3");
+        test.equal(props.segtype, "asdf");
+        test.equal(props.creationtool, "mytool");
+        test.equal(props.creationtoolversion, "1.2.3");
+        test.equal(props.adminlang, "en-US");
+        test.equal(props.srclang, "de-DE");
+        test.equal(props.datatype, "golang");
+
         test.equal(tmx.sourceLocale, "de-DE");
-        test.equal(tmx.datatype, "golang");
 
         test.done();
     },
@@ -215,8 +219,8 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
-                  <prop name="datatype">java</prop>
+                  <prop type="x-project">webapp</prop>
+                  <prop type="datatype">java</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -251,7 +255,7 @@ export const testTMXparse = {
               <body>
                 <tu srclang="en-US">
                   <note>This is a comment</note>
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -282,7 +286,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -315,7 +319,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -324,7 +328,7 @@ export const testTMXparse = {
                   </tuv>
                 </tu>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>seven ate nine</seg>
                   </tuv>
@@ -380,7 +384,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv xml:lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
@@ -417,7 +421,7 @@ export const testTMXparse = {
               <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
-                  <prop name="x-project">webapp</prop>
+                  <prop type="x-project">webapp</prop>
                   <tuv lang="en-US">
                     <seg>Asdf asdf</seg>
                   </tuv>
