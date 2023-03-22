@@ -754,11 +754,64 @@ class TMX {
     }
 
     /**
+     * Merge the variants of the right translation unit into the the left translation
+     * unit.
+     *
+     * @param {TranslationUnit} left the translation unit to merge into
+     * @param {TranslationUnit} right the translation unit to merge
+     * @returns {TranslationUnit} the left translation unit.
+     */
+    mergeVariants(left, right) {
+        const leftVariants = left.getVariants();
+        let leftVariantHash = {};
+        leftVariants.forEach(variant => {
+            leftVariantHash[variant.hashKey()] = variant;
+        });
+
+        const rightVariants = right.getVariants();
+
+        left.addVariants(rightVariants.filter(variant => {
+            return !leftVariantHash[variant.hashKey()];
+        }));
+    }
+
+    /**
+     * Return a new TMX instance that contains a superset of all of the translation
+     * units from the current instance and from the other given instances. The
+     * translation variants within the translation units are also merged together
+     * if they have the same variant for the source locale.
      *
      * @param {Array.<TMX>} tmxs an array of tmx files to merge together
      * @returns {TMX} the merged tmx file
      */
     merge(tmxs) {
+        if (!tmxs || !Array.isArray(tmxs) || tmxs.length === 0) {
+            // nothing to merge
+            return this;
+        }
+
+        const mergetmx = new TMX({
+            sourceLocale: this.sourceLocale,
+            version: this.version,
+            segmentation: this.properties.segtype,
+            creationtool: this.properties.creationtool,
+            creationtoolversion: this.properties.creationtoolversion
+        });
+
+        mergetmx.addTranslationUnits(this.tu);
+
+        tmxs.forEach(tmx => {
+            tmx.tu.forEach(tu => {
+                const mergeTu = mergetmx.tuhash[tu.hashKey()];
+                if (mergeTu) {
+                    this.mergeVariants(mergeTu, tu);
+                } else {
+                    mergetmx.addTranslationUnit(tu);
+                }
+            });
+        });
+
+        return mergetmx;
     }
 }
 

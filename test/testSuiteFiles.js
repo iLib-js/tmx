@@ -20,5 +20,6 @@
 export const files = [
     "testTMX.js",
     "testTMXparse.js",
-    "testTMXdiff.js"
+    "testTMXdiff.js",
+    "testTMXmerge.js"
 ];
