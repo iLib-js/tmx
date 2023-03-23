@@ -29,6 +29,9 @@ limitations under the License.
 
 - added new method diff() to return a new TMX instance that contains
   the differences between the other TMX and the current one
+- added new method merge() to return a new TMX instance that contains
+  the superset of all of the translations units from the current instance
+  and any given instances
 - bug fix: was not parsing the header or the translation unit properties
   properly during deserialization
 

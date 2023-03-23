@@ -521,4 +521,288 @@ export const testTMXmerge = {
 
         test.done();
     },
+
+    testTMXMergeAdditionalStringInMultipleTargets: function(test) {
+        test.expect(5);
+
+        const tmx1 = new TMX();
+        test.ok(tmx1);
+        const tmx2 = new TMX();
+        test.ok(tmx2);
+        const tmx3 = new TMX();
+        test.ok(tmx3);
+
+        let res = new ResourceString({
+            source: "Asdf asdf",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "eins zwei drei"
+        });
+
+        tmx1.addResource(res);
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "das foobar"
+        });
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "seven eight nine",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "sieben acht neun"
+        });
+        tmx3.addResource(res);
+
+        const d = tmx1.merge([tmx2, tmx3]);
+        test.ok(d);
+        test.equal(d.size(), 3);
+
+        test.done();
+    },
+
+    testTMXMergeAdditionalStringRightContentsInMultipleTargets: function(test) {
+        test.expect(32);
+
+        const tmx1 = new TMX();
+        test.ok(tmx1);
+        const tmx2 = new TMX();
+        test.ok(tmx2);
+        const tmx3 = new TMX();
+        test.ok(tmx3);
+
+        let res = new ResourceString({
+            source: "Asdf asdf",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "eins zwei drei"
+        });
+
+        tmx1.addResource(res);
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "das foobar"
+        });
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "seven eight nine",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "sieben acht neun"
+        });
+        tmx3.addResource(res);
+
+        const d = tmx1.merge([tmx2, tmx3]);
+
+        const units = d.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 3);
+        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].source, "Asdf asdf");
+        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].source, "foobar foo");
+        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].source, "seven eight nine");
+
+        let variants = units[0].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].string, "Asdf asdf");
+        test.equal(variants[1].locale, "de-DE");
+        test.equal(variants[1].string, "eins zwei drei");
+
+        variants = units[1].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].string, "foobar foo");
+        test.equal(variants[1].locale, "de-DE");
+        test.equal(variants[1].string, "das foobar");
+
+        variants = units[2].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].string, "seven eight nine");
+        test.equal(variants[1].locale, "de-DE");
+        test.equal(variants[1].string, "sieben acht neun");
+
+        test.done();
+    },
+
+    testTMXMergeAdditionalStringInMultipleTargetsMergeVariants: function(test) {
+        test.expect(5);
+
+        const tmx1 = new TMX();
+        test.ok(tmx1);
+        const tmx2 = new TMX();
+        test.ok(tmx2);
+        const tmx3 = new TMX();
+        test.ok(tmx3);
+
+        let res = new ResourceString({
+            source: "Asdf asdf",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "eins zwei drei"
+        });
+
+        tmx1.addResource(res);
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "das foobar"
+        });
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "andere Zeichenfolge"
+        });
+        tmx3.addResource(res);
+
+        const d = tmx1.merge([tmx2, tmx3]);
+        test.ok(d);
+        test.equal(d.size(), 2);
+
+        test.done();
+    },
+
+    testTMXMergeAdditionalStringRightContentsInMultipleTargets: function(test) {
+        test.expect(28);
+
+        const tmx1 = new TMX();
+        test.ok(tmx1);
+        const tmx2 = new TMX();
+        test.ok(tmx2);
+        const tmx3 = new TMX();
+        test.ok(tmx3);
+
+        let res = new ResourceString({
+            source: "Asdf asdf",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "eins zwei drei"
+        });
+
+        tmx1.addResource(res);
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "das foobar"
+        });
+        tmx2.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "de-DE",
+            target: "andere Zeichenfolge"
+        });
+        tmx3.addResource(res);
+
+        res = new ResourceString({
+            source: "foobar foo",
+            sourceLocale: "en-US",
+            key: "foobar",
+            pathName: "foo/bar/asdf.java",
+            project: "webapp",
+            targetLocale: "fr-FR",
+            target: "un foobar"
+        });
+        tmx3.addResource(res);
+
+        const d = tmx1.merge([tmx2, tmx3]);
+
+        const units = d.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 2);
+        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].source, "Asdf asdf");
+        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].source, "foobar foo");
+
+        let variants = units[0].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].string, "Asdf asdf");
+        test.equal(variants[1].locale, "de-DE");
+        test.equal(variants[1].string, "eins zwei drei");
+
+        variants = units[1].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 4);
+        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].string, "foobar foo");
+        test.equal(variants[1].locale, "de-DE");
+        test.equal(variants[1].string, "das foobar");
+        test.equal(variants[2].locale, "de-DE");
+        test.equal(variants[2].string, "andere Zeichenfolge");
+        test.equal(variants[3].locale, "fr-FR");
+        test.equal(variants[3].string, "un foobar");
+
+        test.done();
+    },
 };
