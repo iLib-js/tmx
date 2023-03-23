@@ -328,6 +328,11 @@ that are possible for the source text so deletions are not necessary.
 <a name="TMX+merge"></a>
 
 ### tmX.merge(tmxs) ⇒ [<code>TMX</code>](#TMX)
+Return a new TMX instance that contains a superset of all of the translation
+units from the current instance and from the other given instances. The
+translation variants within the translation units are also merged together
+if they have the same variant for the source locale.
+
 **Kind**: instance method of [<code>TMX</code>](#TMX)  
 **Returns**: [<code>TMX</code>](#TMX) - the merged tmx file  
 

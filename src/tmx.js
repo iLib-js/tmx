@@ -760,6 +760,7 @@ class TMX {
      * @param {TranslationUnit} left the translation unit to merge into
      * @param {TranslationUnit} right the translation unit to merge
      * @returns {TranslationUnit} the left translation unit.
+     * @private
      */
     mergeVariants(left, right) {
         const leftVariants = left.getVariants();
