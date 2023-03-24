@@ -13,17 +13,21 @@ See https://www.gala-global.org/tmx-14b for details on the file format.
     * [.getProperties()](#TMX+getProperties) ⇒ <code>Object</code>
     * [.addProperty(property, value)](#TMX+addProperty)
     * [.setProperties(properties)](#TMX+setProperties)
-    * [.getTranslationUnits()](#TMX+getTranslationUnits) ⇒ <code>Array.&lt;Object&gt;</code>
+    * [.getTranslationUnits()](#TMX+getTranslationUnits) ⇒ <code>Array.&lt;TranslationUnit&gt;</code>
     * [.addTranslationUnit(unit)](#TMX+addTranslationUnit)
-    * [.addTranslationUnits(files)](#TMX+addTranslationUnits)
+    * [.addTranslationUnits(units)](#TMX+addTranslationUnits)
+    * [.getSegmentationType()](#TMX+getSegmentationType) ⇒ <code>String</code>
     * [.segmentString(string, locale)](#TMX+segmentString) ⇒ <code>Array.&lt;String&gt;</code>
     * [.addResource(res)](#TMX+addResource)
     * [.size()](#TMX+size) ⇒ <code>number</code>
     * [.serialize()](#TMX+serialize) ⇒ <code>String</code>
-    * [.parse(the)](#TMX+parse)
     * [.deserialize(xml)](#TMX+deserialize)
+    * [.load()](#TMX+load)
     * [.getVersion()](#TMX+getVersion) ⇒ <code>String</code>
     * [.write(targetDir)](#TMX+write)
+    * [.diff(other)](#TMX+diff) ⇒ [<code>TMX</code>](#TMX)
+    * [.split(type)](#TMX+split) ⇒ [<code>Array.&lt;TMX&gt;</code>](#TMX)
+    * [.merge(tmxs)](#TMX+merge) ⇒ [<code>TMX</code>](#TMX)
 
 
 * * *
@@ -49,6 +53,7 @@ Default is "en-US".
         of this loctool
     <li><i>originalFormat</i> - the format of the data before it was transformed into tmx. That can be any
         string.
+    <li><i>datatype</i> - the data type of the strings that these translations originally came from
   </ul>
 <li><i>segmentation</i> - How the strings should be segmented. Choices are "paragraph" and "sentence."
 Default is "paragraph". The tmx settings of "block" and "phrase" are not yet supported.
@@ -128,11 +133,11 @@ Set the string properties of this tmx file.
 
 <a name="TMX+getTranslationUnits"></a>
 
-### tmX.getTranslationUnits() ⇒ <code>Array.&lt;Object&gt;</code>
+### tmX.getTranslationUnits() ⇒ <code>Array.&lt;TranslationUnit&gt;</code>
 Get the translation units in this tmx.
 
 **Kind**: instance method of [<code>TMX</code>](#TMX)  
-**Returns**: <code>Array.&lt;Object&gt;</code> - the translation units in this tmx  
+**Returns**: <code>Array.&lt;TranslationUnit&gt;</code> - the translation units in this tmx  
 
 * * *
 
@@ -152,15 +157,25 @@ Add this translation unit to this tmx.
 
 <a name="TMX+addTranslationUnits"></a>
 
-### tmX.addTranslationUnits(files)
+### tmX.addTranslationUnits(units)
 Add translation units to this tmx.
 
 **Kind**: instance method of [<code>TMX</code>](#TMX)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| files | <code>Array.&lt;Object&gt;</code> | the translation units to add to this tmx |
+| units | <code>Array.&lt;TranslationUnit&gt;</code> | the translation units to add to this tmx |
 
+
+* * *
+
+<a name="TMX+getSegmentationType"></a>
+
+### tmX.getSegmentationType() ⇒ <code>String</code>
+Return the segmentation type of this tmx file.
+
+**Kind**: instance method of [<code>TMX</code>](#TMX)  
+**Returns**: <code>String</code> - the name of the segmentation type of this string  
 
 * * *
 
@@ -226,20 +241,6 @@ xml text
 
 * * *
 
-<a name="TMX+parse"></a>
-
-### tmX.parse(the)
-Parse tmx 1.4 files
-
-**Kind**: instance method of [<code>TMX</code>](#TMX)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| the | <code>Object</code> | parsed TMX file in json form |
-
-
-* * *
-
 <a name="TMX+deserialize"></a>
 
 ### tmX.deserialize(xml)
@@ -253,6 +254,15 @@ units already in this instance, they will be removed first.
 | --- | --- | --- |
 | xml | <code>String</code> | the tmx format text to parse |
 
+
+* * *
+
+<a name="TMX+load"></a>
+
+### tmX.load()
+Load and deserialize the current tmx file into memory.
+
+**Kind**: instance method of [<code>TMX</code>](#TMX)  
 
 * * *
 
@@ -278,6 +288,52 @@ Write out the tmx file to the path.
 | Param | Type | Description |
 | --- | --- | --- |
 | targetDir | <code>String</code> \| <code>undefined</code> | if the path was given as relative, then this is the directory that it is relative to. If it was given as absolute, you can pass in undefined. |
+
+
+* * *
+
+<a name="TMX+diff"></a>
+
+### tmX.diff(other) ⇒ [<code>TMX</code>](#TMX)
+Compare the other TMX instance with the current one and return a new TMX
+instance with the difference. This method only handles the difference
+from the current tmx to the other tmx. That is, it handles changes and
+additions in the other tmx, but not deletions from the current tmx. For
+translation memories, the result should be a superset of translations
+that are possible for the source text so deletions are not necessary.
+
+**Kind**: instance method of [<code>TMX</code>](#TMX)  
+**Returns**: [<code>TMX</code>](#TMX) - the difference from the current tmx to the other one  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| other | [<code>TMX</code>](#TMX) | the other tmx file to compare to |
+
+
+* * *
+
+<a name="TMX+split"></a>
+
+### tmX.split(type) ⇒ [<code>Array.&lt;TMX&gt;</code>](#TMX)
+**Kind**: instance method of [<code>TMX</code>](#TMX)  
+**Returns**: [<code>Array.&lt;TMX&gt;</code>](#TMX) - an array of tmx files split in the requested fashion  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>String</code> | the type of split to perform |
+
+
+* * *
+
+<a name="TMX+merge"></a>
+
+### tmX.merge(tmxs) ⇒ [<code>TMX</code>](#TMX)
+**Kind**: instance method of [<code>TMX</code>](#TMX)  
+**Returns**: [<code>TMX</code>](#TMX) - the merged tmx file  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tmxs | [<code>Array.&lt;TMX&gt;</code>](#TMX) | an array of tmx files to merge together |
 
 
 * * *

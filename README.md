@@ -27,6 +27,8 @@ limitations under the License.
 
 ### v1.1.0
 
+- added new method diff() to return a new TMX instance that contains
+  the differences between the other TMX and the current one
 - bug fix: was not parsing the header or the translation unit properties
   properly during deserialization
 
