@@ -70,7 +70,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -98,7 +98,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -128,7 +128,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -141,7 +141,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -167,7 +167,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -180,7 +180,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -195,16 +195,16 @@ export const testTMXmerge = {
         test.ok(units);
         test.ok(Array.isArray(units));
         test.equal(units.length, 2);
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         test.equal(units[1].source, "foobar foo");
 
         let variants = units[0].getVariants();
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "Asdf asdf");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "eins zwei drei");
@@ -213,7 +213,7 @@ export const testTMXmerge = {
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "foobar foo");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "das foobar");
@@ -231,7 +231,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -244,7 +244,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -270,7 +270,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -283,7 +283,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -300,7 +300,7 @@ export const testTMXmerge = {
         test.equal(units.length, 1);
 
         // source is the same, but the variants differ
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "Asdf asdf");
 
         const variants = units[0].getVariants();
@@ -308,7 +308,7 @@ export const testTMXmerge = {
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 3);
 
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "Asdf asdf");
 
         test.equal(variants[1].locale, "de-DE");
@@ -330,7 +330,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -343,7 +343,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -369,7 +369,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -382,7 +382,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -397,16 +397,16 @@ export const testTMXmerge = {
         test.ok(units);
         test.ok(Array.isArray(units));
         test.equal(units.length, 2);
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         test.equal(units[1].source, "foobar foo");
 
         let variants = units[0].getVariants();
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "Asdf asdf");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "eins zwei drei");
@@ -415,7 +415,7 @@ export const testTMXmerge = {
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "foobar foo");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "das foobar");
@@ -433,7 +433,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -446,7 +446,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -472,7 +472,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -485,7 +485,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -502,7 +502,7 @@ export const testTMXmerge = {
         test.equal(units.length, 1);
 
         // source is the same, but the variants differ
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "Asdf asdf");
 
         const variants = units[0].getVariants();
@@ -510,7 +510,7 @@ export const testTMXmerge = {
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 3);
 
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "Asdf asdf");
 
         test.equal(variants[1].locale, "de-DE");
@@ -534,7 +534,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -547,7 +547,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -558,7 +558,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "seven eight nine",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -586,7 +586,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -599,7 +599,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -610,7 +610,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "seven eight nine",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -625,18 +625,18 @@ export const testTMXmerge = {
         test.ok(units);
         test.ok(Array.isArray(units));
         test.equal(units.length, 3);
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         test.equal(units[1].source, "foobar foo");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         test.equal(units[2].source, "seven eight nine");
 
         let variants = units[0].getVariants();
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "Asdf asdf");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "eins zwei drei");
@@ -645,7 +645,7 @@ export const testTMXmerge = {
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "foobar foo");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "das foobar");
@@ -654,7 +654,7 @@ export const testTMXmerge = {
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "seven eight nine");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "sieben acht neun");
@@ -674,7 +674,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -687,7 +687,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -698,7 +698,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -726,7 +726,7 @@ export const testTMXmerge = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -739,7 +739,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -750,7 +750,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -761,7 +761,7 @@ export const testTMXmerge = {
 
         res = new ResourceString({
             source: "foobar foo",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -776,16 +776,16 @@ export const testTMXmerge = {
         test.ok(units);
         test.ok(Array.isArray(units));
         test.equal(units.length, 2);
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         test.equal(units[1].source, "foobar foo");
 
         let variants = units[0].getVariants();
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "Asdf asdf");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "eins zwei drei");
@@ -794,7 +794,7 @@ export const testTMXmerge = {
         test.ok(variants);
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 4);
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
         test.equal(variants[0].string, "foobar foo");
         test.equal(variants[1].locale, "de-DE");
         test.equal(variants[1].string, "das foobar");

@@ -136,7 +136,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -164,7 +164,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -177,7 +177,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -205,7 +205,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "eins zwei drei");
         test.equal(variants[1].locale, "de-DE");
@@ -221,7 +221,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp"
@@ -231,7 +231,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "baby baby",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp"
@@ -254,7 +254,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.ok(!units[1].comment);
         props = units[1].getProperties();
@@ -267,7 +267,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "baby baby");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -280,7 +280,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -292,7 +292,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "baby baby",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp",
@@ -317,7 +317,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "eins zwei drei");
         test.equal(variants[1].locale, "de-DE");
@@ -333,7 +333,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "baby baby");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "vier fumpf sechs");
         test.equal(variants[1].locale, "de-DE");
@@ -349,7 +349,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -361,7 +361,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -386,7 +386,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "eins zwei drei");
         test.equal(variants[1].locale, "de-DE");
@@ -407,7 +407,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -420,7 +420,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "a/b/cfoo/bar/asdf.java",
             project: "webapp",
@@ -445,7 +445,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "eins zwei drei");
         test.equal(variants[1].locale, "de-DE");
@@ -462,7 +462,7 @@ export const testTMX = {
         test.expect(3);
 
         const tmx = new TMX({
-            locale: "en-US"
+            locale: "en"
         });
         test.ok(tmx);
 
@@ -472,14 +472,14 @@ export const testTMX = {
             key: "foobar",
             pathName: "foo/bar/j.java",
             project: "webapp",
-            targetLocale: "en-US",
+            targetLocale: "en",
             target: "vier fumpf sechs"
         });
 
         tmx.addResource(res);
 
         // should reject it. Only units with the source
-        // locale of en-US go in this tmx
+        // locale of en go in this tmx
         const units = tmx.getTranslationUnits();
         test.ok(units);
         test.equal(units.length, 0);
@@ -495,7 +495,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -507,7 +507,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -524,7 +524,7 @@ export const testTMX = {
         // should not duplicate the unit or the variants
 
         test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -535,7 +535,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "eins zwei drei");
         test.equal(variants[1].locale, "de-DE");
@@ -555,7 +555,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -573,7 +573,7 @@ export const testTMX = {
         test.equal(units.length, 3);
 
         test.equal(units[0].source, "a");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -585,25 +585,25 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "b");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[2].source, "c");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         variants = units[2].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -620,7 +620,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -644,7 +644,7 @@ export const testTMX = {
         test.equal(units.length, 3);
 
         test.equal(units[0].source, "a");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -656,31 +656,31 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "x");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "b");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "y");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[2].source, "c");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         variants = units[2].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "z");
         test.equal(variants[1].locale, "de-DE");
@@ -700,7 +700,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -719,7 +719,7 @@ export const testTMX = {
                 "n",
                 "o"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -747,42 +747,42 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         variants = units[2].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         variants = units[3].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "m");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         variants = units[4].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "n");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         variants = units[5].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "o");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -799,7 +799,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -824,7 +824,7 @@ export const testTMX = {
                 "n",
                 "o"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "asdf",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -858,7 +858,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "x");
         test.equal(variants[1].locale, "de-DE");
@@ -868,7 +868,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "y");
         test.equal(variants[1].locale, "de-DE");
@@ -878,7 +878,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "z");
         test.equal(variants[1].locale, "de-DE");
@@ -888,7 +888,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "m");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "p");
         test.equal(variants[1].locale, "de-DE");
@@ -898,7 +898,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "n");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "q");
         test.equal(variants[1].locale, "de-DE");
@@ -908,7 +908,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "o");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "r");
         test.equal(variants[1].locale, "de-DE");
@@ -928,7 +928,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -953,7 +953,7 @@ export const testTMX = {
                 "b",
                 "o"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "asdf",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -977,7 +977,7 @@ export const testTMX = {
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "a");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -989,7 +989,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "x");
         test.equal(variants[1].locale, "de-DE");
@@ -998,13 +998,13 @@ export const testTMX = {
         test.equal(variants[2].locale, "de-DE");
 
         test.equal(units[1].source, "b");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "y");
         test.equal(variants[1].locale, "de-DE");
@@ -1013,25 +1013,25 @@ export const testTMX = {
         test.equal(variants[2].locale, "de-DE");
 
         test.equal(units[2].source, "c");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         variants = units[2].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "z");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[3].source, "o");
-        test.equal(units[3].sourceLocale, "en-US");
+        test.equal(units[3].sourceLocale, "en");
         variants = units[3].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "o");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "r");
         test.equal(variants[1].locale, "de-DE");
@@ -1050,7 +1050,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other string"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1067,7 +1067,7 @@ export const testTMX = {
         test.ok(units);
         test.equal(units.length, 2);
 
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         test.equal(units[0].source, "one string");
         const props = units[0].getProperties();
         test.ok(props);
@@ -1080,9 +1080,9 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         test.equal(units[1].source, "other string");
 
         variants = units[1].getVariants();
@@ -1090,7 +1090,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "other string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -1106,7 +1106,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other string"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1129,7 +1129,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "one string");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -1141,19 +1141,19 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "ein Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "other string");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "other string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "mehrere Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1172,7 +1172,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1190,7 +1190,7 @@ export const testTMX = {
                 one: "a string",
                 other: "some strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "asdf",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1208,7 +1208,7 @@ export const testTMX = {
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "one string");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -1220,34 +1220,34 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "other strings");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         variants = units[1].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[2].source, "a string");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         variants = units[2].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "a string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[3].source, "some strings");
-        test.equal(units[3].sourceLocale, "en-US");
+        test.equal(units[3].sourceLocale, "en");
         variants = units[3].getVariants();
         test.ok(variants);
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "some strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -1263,7 +1263,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1286,7 +1286,7 @@ export const testTMX = {
                 one: "a string",
                 other: "many strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1320,7 +1320,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "ein Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1330,7 +1330,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "mehrere Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1340,7 +1340,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "a string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "одна струна");
         test.equal(variants[1].locale, "ru-RU");
@@ -1350,7 +1350,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "many strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "много струн");
         test.equal(variants[1].locale, "ru-RU");
@@ -1372,7 +1372,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1395,7 +1395,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1427,7 +1427,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "ein Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1437,7 +1437,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "mehrere Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1459,7 +1459,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1482,7 +1482,7 @@ export const testTMX = {
                 one: "one string",
                 other: "some other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -1516,7 +1516,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "eine Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1529,7 +1529,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "mehrere Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1539,7 +1539,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "some other strings");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "mehrere andere Zeichenfolge");
         test.equal(variants[1].locale, "de-DE");
@@ -1793,7 +1793,7 @@ export const testTMX = {
         tmx.deserialize(contents);
 
         test.ok(tmx.size(), 1);
-        test.equal(tmx.sourceLocale, "en-US");
+        test.equal(tmx.sourceLocale, "en");
 
         const units = tmx.getTranslationUnits();
         test.ok(units);
@@ -2115,7 +2115,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2132,7 +2132,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2150,13 +2150,13 @@ export const testTMX = {
         const actual = tmx.serialize();
         const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
-            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en" srclang="en" datatype="unknown"/>\n' +
             '  <body>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>Asdf asdf</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
@@ -2182,7 +2182,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -2194,7 +2194,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "baby baby",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp",
@@ -2207,20 +2207,20 @@ export const testTMX = {
         const actual = tmx.serialize();
         const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
-            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en" srclang="en" datatype="unknown"/>\n' +
             '  <body>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>Asdf asdf</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>eins zwei drei</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>baby baby</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
@@ -2244,7 +2244,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -2259,7 +2259,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "blah blah",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2283,7 +2283,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2305,66 +2305,66 @@ export const testTMX = {
         const actual = tmx.serialize();
         const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
-            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en" srclang="en" datatype="unknown"/>\n' +
             '  <body>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>Asdf asdf</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>eins zwei drei</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>one string</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>eine Zeichenfolge</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>other strings</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>mehrere Zeichenfolge</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>a</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>x</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>b</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>y</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>c</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
@@ -2390,7 +2390,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "This is a test. This is only a test.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2408,7 +2408,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2420,10 +2420,10 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2435,7 +2435,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -2450,7 +2450,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "I would like to see Dr. Smith in the U.S. not someone else. Please arrange that.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2468,7 +2468,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "I would like to see Dr. Smith in the U.S. not someone else.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2480,10 +2480,10 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "I would like to see Dr. Smith in the U.S. not someone else.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "Please arrange that.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2495,7 +2495,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "Please arrange that.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -2510,7 +2510,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "This is a test.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2528,7 +2528,7 @@ export const testTMX = {
         test.equal(units.length, 1);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2540,7 +2540,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -2555,7 +2555,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "This is a test. This is only a test.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2575,7 +2575,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2587,13 +2587,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2605,7 +2605,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
@@ -2623,7 +2623,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "This is a test. This is only a test.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2643,7 +2643,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2655,13 +2655,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "これはテストです。");
         test.equal(variants[1].locale, "ja-JP");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2673,7 +2673,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "これは単なるテストです。");
         test.equal(variants[1].locale, "ja-JP");
@@ -2691,7 +2691,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "This is a test.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2711,7 +2711,7 @@ export const testTMX = {
         test.equal(units.length, 1);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         const props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2723,7 +2723,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
@@ -2743,7 +2743,7 @@ export const testTMX = {
             sourceArray: [
                 "This is a test. This is only a test."
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2761,7 +2761,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2773,10 +2773,10 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2788,7 +2788,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -2805,7 +2805,7 @@ export const testTMX = {
             sourceArray: [
                 "This is a test. This is only a test."
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2827,7 +2827,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2839,13 +2839,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2857,7 +2857,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
@@ -2878,7 +2878,7 @@ export const testTMX = {
                 "This is a test. This is only a test.",
                 "Yet another test. Another test."
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -2901,7 +2901,7 @@ export const testTMX = {
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2913,13 +2913,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2931,13 +2931,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[2].source, "Yet another test.");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         props = units[2].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2949,13 +2949,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Yet another test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Jemals noch eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[3].source, "Another test.");
-        test.equal(units[3].sourceLocale, "en-US");
+        test.equal(units[3].sourceLocale, "en");
         props = units[3].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -2967,7 +2967,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Another test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Noch eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
@@ -2987,7 +2987,7 @@ export const testTMX = {
             sourcePlurals: {
                 other: "This is a test. This is only a test."
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3005,7 +3005,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3017,10 +3017,10 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3032,7 +3032,7 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.done();
     },
@@ -3049,7 +3049,7 @@ export const testTMX = {
             sourcePlurals: {
                 "other": "This is a test. This is only a test."
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3071,7 +3071,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3083,13 +3083,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3101,7 +3101,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
@@ -3122,7 +3122,7 @@ export const testTMX = {
                 one: "This is a test. This is only a test.",
                 other: "Yet another test. Another test."
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3145,7 +3145,7 @@ export const testTMX = {
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3157,13 +3157,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3175,13 +3175,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[2].source, "Yet another test.");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         props = units[2].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3193,13 +3193,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Yet another test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Jemals noch eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
 
         test.equal(units[3].source, "Another test.");
-        test.equal(units[3].sourceLocale, "en-US");
+        test.equal(units[3].sourceLocale, "en");
         props = units[3].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3211,7 +3211,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Another test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Noch eine Untersuchung.");
         test.equal(variants[1].locale, "de-DE");
@@ -3232,7 +3232,7 @@ export const testTMX = {
                 one: "This is a test. This is only a test.",
                 other: "Yet another test. Another test."
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3254,7 +3254,7 @@ export const testTMX = {
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3266,10 +3266,10 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3281,10 +3281,10 @@ export const testTMX = {
         test.equal(variants.length, 1);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(units[2].source, "Yet another test.");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         props = units[2].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3296,13 +3296,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Yet another test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "さらに別のテスト。");
         test.equal(variants[1].locale, "ja-JP");
 
         test.equal(units[3].source, "Another test.");
-        test.equal(units[3].sourceLocale, "en-US");
+        test.equal(units[3].sourceLocale, "en");
         props = units[3].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3314,7 +3314,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "Another test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "別のテスト。");
         test.equal(variants[1].locale, "ja-JP");
@@ -3335,7 +3335,7 @@ export const testTMX = {
                 one: "This is a test. This is only a test.",
                 other: "These are some tests. These are only some tests."
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3359,7 +3359,7 @@ export const testTMX = {
         test.equal(units.length, 4);
 
         test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3371,13 +3371,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Это тест.");
         test.equal(variants[1].locale, "ru-RU");
 
         test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3389,13 +3389,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Это всего лишь тест.");
         test.equal(variants[1].locale, "ru-RU");
 
         test.equal(units[2].source, "These are some tests.");
-        test.equal(units[2].sourceLocale, "en-US");
+        test.equal(units[2].sourceLocale, "en");
         props = units[2].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3407,7 +3407,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "These are some tests.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Это некоторые тестов.");
         test.equal(variants[1].locale, "ru-RU");
@@ -3416,7 +3416,7 @@ export const testTMX = {
         test.equal(variants[2].locale, "ru-RU");
 
         test.equal(units[3].source, "These are only some tests.");
-        test.equal(units[3].sourceLocale, "en-US");
+        test.equal(units[3].sourceLocale, "en");
         props = units[3].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3428,7 +3428,7 @@ export const testTMX = {
         test.equal(variants.length, 3);
 
         test.equal(variants[0].string, "These are only some tests.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Это только некоторые тестов.");
         test.equal(variants[1].locale, "ru-RU");
@@ -3449,7 +3449,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf. Foobar foo.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -3464,7 +3464,7 @@ export const testTMX = {
                 one: "one string",
                 other: "other strings"
             },
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "blah blah",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3488,7 +3488,7 @@ export const testTMX = {
                 "b",
                 "c"
             ],
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3524,86 +3524,86 @@ export const testTMX = {
         const expected =
             '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
-            '  <header segtype="sentence" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <header segtype="sentence" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en" srclang="en" datatype="unknown"/>\n' +
             '  <body>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>Asdf asdf.</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>Eins zwei drei.</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>Foobar foo.</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>Vier fumpf sechs.</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>one string</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>eine Zeichenfolge</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>other strings</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>mehrere Zeichenfolge</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>A b cee.</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>X y zee.</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>E f g.</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>M n o.</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>b</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>y</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-context">asdf</prop>\n' +
             '      <prop type="x-flavor">chocolate</prop>\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>c</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
@@ -3629,7 +3629,7 @@ export const testTMX = {
 
         const res = new ResourceString({
             source: "The SignRequest subdomain cannot be changed. If you need a different domain you can create a new team.",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             autoKey: false,
@@ -3649,7 +3649,7 @@ export const testTMX = {
         test.equal(units.length, 2);
 
         test.equal(units[0].source, "The SignRequest subdomain cannot be changed.");
-        test.equal(units[0].sourceLocale, "en-US");
+        test.equal(units[0].sourceLocale, "en");
         let props = units[0].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3661,13 +3661,13 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "The SignRequest subdomain cannot be changed.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "SignRequest domänen kan inte ändras.");
         test.equal(variants[1].locale, "sv");
 
         test.equal(units[1].source, "If you need a different domain you can create a new team.");
-        test.equal(units[1].sourceLocale, "en-US");
+        test.equal(units[1].sourceLocale, "en");
         props = units[1].getProperties();
         test.ok(props);
         test.equal(props["x-project"], "webapp");
@@ -3679,7 +3679,7 @@ export const testTMX = {
         test.equal(variants.length, 2);
 
         test.equal(variants[0].string, "If you need a different domain you can create a new team.");
-        test.equal(variants[0].locale, "en-US");
+        test.equal(variants[0].locale, "en");
 
         test.equal(variants[1].string, "Om du behöver en annan domän kan du skapa en nya arbetsgrupp.");
         test.equal(variants[1].locale, "sv");
@@ -3695,7 +3695,7 @@ export const testTMX = {
 
         let res = new ResourceString({
             source: "Asdf asdf",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "foobar",
             pathName: "foo/bar/asdf.java",
             project: "webapp",
@@ -3707,7 +3707,7 @@ export const testTMX = {
 
         res = new ResourceString({
             source: "baby baby",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp",
@@ -3720,7 +3720,7 @@ export const testTMX = {
         // source-only resource should not appear in the serialized output
         res = new ResourceString({
             source: "oh yeah!",
-            sourceLocale: "en-US",
+            sourceLocale: "en",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp",
@@ -3732,20 +3732,20 @@ export const testTMX = {
         const actual = tmx.serialize();
         const expected = '<?xml version="1.0" encoding="utf-8"?>\n' +
             '<tmx version="1.4">\n' +
-            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en-US" srclang="en-US" datatype="unknown"/>\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="' + loctoolVersion + '" adminlang="en" srclang="en" datatype="unknown"/>\n' +
             '  <body>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>Asdf asdf</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +
             '        <seg>eins zwei drei</seg>\n' +
             '      </tuv>\n' +
             '    </tu>\n' +
-            '    <tu srclang="en-US">\n' +
+            '    <tu srclang="en">\n' +
             '      <prop type="x-project">webapp</prop>\n' +
-            '      <tuv xml:lang="en-US">\n' +
+            '      <tuv xml:lang="en">\n' +
             '        <seg>baby baby</seg>\n' +
             '      </tuv>\n' +
             '      <tuv xml:lang="de-DE">\n' +

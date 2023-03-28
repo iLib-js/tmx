@@ -124,7 +124,7 @@ class TMX {
      * <ul>
      * <li><i>path</i> - the path to the tmx file on disk
      * <li><i>sourceLocale</i> - specify the default source locale if a resource doesn't have a locale itself.
-     * Default is "en-US".
+     * Default is "en".
      * <li><i>version</i> - The version of tmx that will be produced by this instance. Default is "1.4".
      * <li><i>properties</i> - an object containing general string properties that will appear in the header
      *   of the tmx file. Typical properties are:
@@ -150,7 +150,7 @@ class TMX {
             datatype: "unknown",
             segtype: "paragraph"
         };
-        this.sourceLocale = "en-US";
+        this.sourceLocale = "en";
         this.adminLocale = this.sourceLocale;
 
         if (options) {
