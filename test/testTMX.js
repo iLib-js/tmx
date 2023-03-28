@@ -1692,6 +1692,188 @@ export const testTMX = {
         test.done();
     },
 
+    testTMXDeserializeUnitsSrclangIsDifferentThanHeaderSrclang: function(test) {
+        test.expect(21);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" srclang="en-US" adminlang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en">\n' +
+            '        <seg>Foobar</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>Das Foobar</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+        test.equal(tmx.sourceLocale, "en-US");
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 2);
+
+        test.equal(units[0].sourceLocale, "en");
+        test.equal(units[1].sourceLocale, "en");
+
+        let variants = units[0].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+
+        test.equal(variants[0].string, "Asdf asdf");
+        test.equal(variants[0].locale, "en");
+
+        test.equal(variants[1].string, "eins zwei drei");
+        test.equal(variants[1].locale, "de-DE");
+
+        variants = units[1].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+
+        test.equal(variants[0].string, "Foobar");
+        test.equal(variants[0].locale, "en");
+
+        test.equal(variants[1].string, "Das Foobar");
+        test.equal(variants[1].locale, "de-DE");
+
+        test.done();
+    },
+
+    testTMXDeserializeNoSrclangHeaderAttrAtAll: function(test) {
+        test.expect(21);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" adminlang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en">\n' +
+            '        <seg>Foobar</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>Das Foobar</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+        test.equal(tmx.sourceLocale, "en-US");
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 2);
+
+        test.equal(units[0].sourceLocale, "en");
+        test.equal(units[1].sourceLocale, "en");
+
+        let variants = units[0].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+
+        test.equal(variants[0].string, "Asdf asdf");
+        test.equal(variants[0].locale, "en");
+
+        test.equal(variants[1].string, "eins zwei drei");
+        test.equal(variants[1].locale, "de-DE");
+
+        variants = units[1].getVariants();
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+
+        test.equal(variants[0].string, "Foobar");
+        test.equal(variants[0].locale, "en");
+
+        test.equal(variants[1].string, "Das Foobar");
+        test.equal(variants[1].locale, "de-DE");
+
+        test.done();
+    },
+
+    testTMXDeserializeRightDatatype: function(test) {
+        test.expect(7);
+
+        const tmx = new TMX();
+
+        const contents = '<?xml version="1.0" encoding="utf-8"?>\n' +
+            '<tmx version="1.4">\n' +
+            '  <header segtype="paragraph" creationtool="loctool" creationtoolversion="2.20.2" srclang="en-US" adminlang="en-US" datatype="javascript"/>\n' +
+            '  <body>\n' +
+            '    <tu srclang="en">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en">\n' +
+            '        <seg>Asdf asdf</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>eins zwei drei</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '    <tu srclang="en">\n' +
+            '      <prop type="x-project">webapp</prop>\n' +
+            '      <tuv xml:lang="en">\n' +
+            '        <seg>Foobar</seg>\n' +
+            '      </tuv>\n' +
+            '      <tuv xml:lang="de-DE">\n' +
+            '        <seg>Das Foobar</seg>\n' +
+            '      </tuv>\n' +
+            '    </tu>\n' +
+            '  </body>\n' +
+            '</tmx>';
+
+        tmx.deserialize(contents);
+
+        test.ok(tmx.size(), 1);
+        test.equal(tmx.sourceLocale, "en-US");
+
+        const units = tmx.getTranslationUnits();
+        test.ok(units);
+        test.ok(Array.isArray(units));
+        test.equal(units.length, 2);
+
+        test.equal(units[0].datatype, "javascript");
+        test.equal(units[1].datatype, "javascript");
+
+        test.done();
+    },
+
     testTMXDeserializeSimpleTransUnitProperties: function(test) {
         test.expect(6);
 

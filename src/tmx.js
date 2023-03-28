@@ -151,6 +151,7 @@ class TMX {
             segtype: "paragraph"
         };
         this.sourceLocale = "en-US";
+        this.adminLocale = this.sourceLocale;
 
         if (options) {
             this.properties = options.properties || this.properties;
@@ -471,7 +472,7 @@ class TMX {
                         segtype: this.properties.segtype,
                         creationtool: this.properties.creationtool || "loctool",
                         creationtoolversion: this.properties.creationtoolversion || getVersion(),
-                        adminlang: "en-US",
+                        adminlang: this.adminLocale,
                         srclang: this.sourceLocale,
                         datatype: this.properties.datatype
                     }
@@ -537,6 +538,9 @@ class TMX {
             if (attrs.srclang) {
                 this.sourceLocale = attrs.srclang;
             }
+            if (attrs.adminlang) {
+                this.adminLocale = attrs.adminlang;
+            }
         }
         if (tmx.body) {
             if (tmx.body.tu) {
@@ -544,9 +548,8 @@ class TMX {
                 for (let i = 0; i < units.length; i++) {
                     const unit = units[i];
                     const tu = new TranslationUnit();
-                    if (unit._attributes & unit._attributes.srclang) {
-                        tu.sourceLocale = unit._attributes.srclang;
-                    }
+                    tu.sourceLocale = (unit._attributes && unit._attributes.srclang) || this.sourceLocale || this.adminLocale || "en";
+                    tu.datatype = this.properties.datatype;
                     if (unit.prop) {
                         const props = makeArray(unit.prop);
                         const properties = {};
@@ -584,7 +587,7 @@ class TMX {
                                     string
                                 });
                                 tu.addVariant(variant);
-                                if (variant.locale === this.sourceLocale) {
+                                if (variant.locale === tu.sourceLocale) {
                                     tu.source = variant.string;
                                     tu.sourceLocale = variant.locale;
                                 }
