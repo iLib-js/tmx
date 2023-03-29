@@ -25,6 +25,18 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.1.1
+
+- fixed multiple bugs:
+    - when reading TMX files which did not have the header
+      attribute "srclang", it would put all of the translation
+      variants into the same translation unit
+    - if the srclang attribute does exist and also exists on
+      the translation unit, and they are different, it put the
+      wrong locale onto the translation unit instance
+    - it ignored the adminlang attribute if it was there
+    - it put the wrong datatype onto the translation units
+
 ### v1.1.0
 
 - added new method diff() to return a new TMX instance that contains

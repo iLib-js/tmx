@@ -124,7 +124,7 @@ class TMX {
      * <ul>
      * <li><i>path</i> - the path to the tmx file on disk
      * <li><i>sourceLocale</i> - specify the default source locale if a resource doesn't have a locale itself.
-     * Default is "en-US".
+     * Default is "en".
      * <li><i>version</i> - The version of tmx that will be produced by this instance. Default is "1.4".
      * <li><i>properties</i> - an object containing general string properties that will appear in the header
      *   of the tmx file. Typical properties are:
@@ -150,7 +150,8 @@ class TMX {
             datatype: "unknown",
             segtype: "paragraph"
         };
-        this.sourceLocale = "en-US";
+        this.sourceLocale = "en";
+        this.adminLocale = this.sourceLocale;
 
         if (options) {
             this.properties = options.properties || this.properties;
@@ -471,7 +472,7 @@ class TMX {
                         segtype: this.properties.segtype,
                         creationtool: this.properties.creationtool || "loctool",
                         creationtoolversion: this.properties.creationtoolversion || getVersion(),
-                        adminlang: "en-US",
+                        adminlang: this.adminLocale,
                         srclang: this.sourceLocale,
                         datatype: this.properties.datatype
                     }
@@ -537,6 +538,9 @@ class TMX {
             if (attrs.srclang) {
                 this.sourceLocale = attrs.srclang;
             }
+            if (attrs.adminlang) {
+                this.adminLocale = attrs.adminlang;
+            }
         }
         if (tmx.body) {
             if (tmx.body.tu) {
@@ -544,9 +548,8 @@ class TMX {
                 for (let i = 0; i < units.length; i++) {
                     const unit = units[i];
                     const tu = new TranslationUnit();
-                    if (unit._attributes & unit._attributes.srclang) {
-                        tu.sourceLocale = unit._attributes.srclang;
-                    }
+                    tu.sourceLocale = (unit._attributes && unit._attributes.srclang) || this.sourceLocale || this.adminLocale || "en";
+                    tu.datatype = this.properties.datatype;
                     if (unit.prop) {
                         const props = makeArray(unit.prop);
                         const properties = {};
@@ -584,7 +587,7 @@ class TMX {
                                     string
                                 });
                                 tu.addVariant(variant);
-                                if (variant.locale === this.sourceLocale) {
+                                if (variant.locale === tu.sourceLocale) {
                                     tu.source = variant.string;
                                     tu.sourceLocale = variant.locale;
                                 }

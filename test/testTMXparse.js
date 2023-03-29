@@ -79,7 +79,7 @@ export const testTMXparse = {
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
             <tmx version="1.4">
-              <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
+              <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
                   <prop type="x-project">webapp</prop>
@@ -122,7 +122,7 @@ export const testTMXparse = {
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
             <tmx version="1.4">
-              <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en-US" datatype="javascript"/>
+              <header segtype="paragraph" creationtool="loctool" creationtoolversion="1.0.0" adminlang="en" datatype="javascript"/>
               <body>
                 <tu srclang="en-US">
                   <prop type="x-project">webapp</prop>
