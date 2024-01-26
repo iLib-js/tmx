@@ -1,7 +1,7 @@
 /*
- * testTMXdiff.js - test the TMX diff method.
+ * TMXdiff.test.js - test the TMX diff method.
  *
- * Copyright © 2023 Box, Inc.
+ * Copyright © 2024 Box, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import path from 'node:path';
-import fs from 'node:fs';
+import path from 'path';
+import fs from 'fs';
 import {
     ResourceString,
     ResourceArray,
@@ -45,30 +45,28 @@ function diff(a, b) {
 
 const loctoolVersion = JSON.parse(fs.readFileSync(Path.join(__dirname, "..", "package.json"), "utf-8")).version;
 
-export const testTMXdiff = {
-    testTMXDiffEmpty: function(test) {
-        test.expect(4);
+describe("testTMXdiff", () => {
+    test("TMXDiffEmpty", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         const d = tmx1.diff(tmx2);
 
-        test.ok(d);
-        test.equal(d.size(), 0);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffNoDiff: function(test) {
-        test.expect(4);
+    test("TMXDiffNoDiff", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -86,19 +84,17 @@ export const testTMXdiff = {
         // they have the same strings in them, so there should be no diff
         const d = tmx1.diff(tmx2);
 
-        test.ok(d);
-        test.equal(d.size(), 0);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalStringInTarget: function(test) {
-        test.expect(4);
+    test("TMXDiffAdditionalStringInTarget", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -125,19 +121,17 @@ export const testTMXdiff = {
         tmx2.addResource(res);
 
         const d = tmx1.diff(tmx2);
-        test.ok(d);
-        test.equal(d.size(), 1);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalStringRightContentsInTarget: function(test) {
-        test.expect(14);
+    test("TMXDiffAdditionalStringRightContentsInTarget", () => {
+        expect.assertions(14);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -166,31 +160,29 @@ export const testTMXdiff = {
         const d = tmx1.diff(tmx2);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "foobar foo");
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("foobar foo");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "foobar foo");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "das foobar");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("foobar foo");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("das foobar");
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalVariantInTarget: function(test) {
-        test.expect(4);
+    test("TMXDiffAdditionalVariantInTarget", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -217,19 +209,17 @@ export const testTMXdiff = {
         tmx2.addResource(res);
 
         const d = tmx1.diff(tmx2);
-        test.ok(d);
-        test.equal(d.size(), 1);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalVariantRightContentsInTarget: function(test) {
-        test.expect(14);
+    test("TMXDiffAdditionalVariantRightContentsInTarget", () => {
+        expect.assertions(14);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -258,35 +248,33 @@ export const testTMXdiff = {
         const d = tmx1.diff(tmx2);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
 
         // source is the same, but the variants differ
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
 
-        test.equal(variants[1].locale, "fr-FR");
-        test.equal(variants[1].string, "un deux trois");
+        expect(variants[1].locale).toBe("fr-FR");
+        expect(variants[1].string).toBe("un deux trois");
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalStringInSource: function(test) {
-        test.expect(4);
+    test("TMXDiffAdditionalStringInSource", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -315,19 +303,17 @@ export const testTMXdiff = {
         // we don't care about deletions from the current to the new tmx,
         // only additions and changes
         const d = tmx1.diff(tmx2);
-        test.ok(d);
-        test.equal(d.size(), 0);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalStringRightContentsInSource: function(test) {
-        test.expect(5);
+    test("TMXDiffAdditionalStringRightContentsInSource", () => {
+        expect.assertions(5);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -358,20 +344,18 @@ export const testTMXdiff = {
         // we don't care about deletions from the current to the new tmx,
         // only additions and changes
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 0);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalVariantInSource: function(test) {
-        test.expect(4);
+    test("TMXDiffAdditionalVariantInSource", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -400,19 +384,17 @@ export const testTMXdiff = {
         // we don't care about deletions from the current to the new tmx,
         // only additions and changes
         const d = tmx1.diff(tmx2);
-        test.ok(d);
-        test.equal(d.size(), 0);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXDiffAdditionalVariantRightContentsInSource: function(test) {
-        test.expect(5);
+    test("TMXDiffAdditionalVariantRightContentsInSource", () => {
+        expect.assertions(5);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -441,10 +423,8 @@ export const testTMXdiff = {
         const d = tmx1.diff(tmx2);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 0);
-
-        test.done();
-    },
-};
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(0);
+    });
+});

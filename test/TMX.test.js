@@ -1,7 +1,7 @@
 /*
- * testTMX.js - test the TMX object.
+ * TMX.test.js - test the TMX object.
  *
- * Copyright © 2023 Box, Inc.
+ * Copyright © 2024 Box, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,29 +44,25 @@ function diff(a, b) {
 
 const loctoolVersion = JSON.parse(fs.readFileSync(Path.join(__dirname, "..", "package.json"), "utf-8")).version;
 
-export const testTMX = {
-    testTMXConstructor: function(test) {
-        test.expect(1);
+describe("testTMX", () => {
+    test("TMXConstructor", () => {
+        expect.assertions(1);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTMXConstructorIsEmpty: function(test) {
-        test.expect(2);
+    test("TMXConstructorIsEmpty", () => {
+        expect.assertions(2);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
-        test.equal(tmx.size(), 0);
+        expect(tmx.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXConstructorFull: function(test) {
-        test.expect(4);
+    test("TMXConstructorFull", () => {
+        expect.assertions(4);
 
         const tmx = new TMX({
             properties: {
@@ -75,64 +71,56 @@ export const testTMX = {
                 creationtoolversion: "1.2.34",
             },
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
         const props = tmx.getProperties();
 
-        test.equal(props["creationtool"], "loctool");
-        test.equal(props["creationtoolversion"], "1.2.34");
-        test.equal(props["tool-name"], "Localization Tool");
+        expect(props["creationtool"]).toBe("loctool");
+        expect(props["creationtoolversion"]).toBe("1.2.34");
+        expect(props["tool-name"]).toBe("Localization Tool");
+    });
 
-        test.done();
-    },
-
-    testTMXGetPath: function(test) {
-        test.expect(2);
+    test("TMXGetPath", () => {
+        expect.assertions(2);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         tmx.setPath("test/testfiles/x.tmx");
-        test.equal(tmx.getPath(), "test/testfiles/x.tmx");
+        expect(tmx.getPath()).toBe("test/testfiles/x.tmx");
+    });
 
-        test.done();
-    },
-
-    testTMXSetPath: function(test) {
-        test.expect(3);
+    test("TMXSetPath", () => {
+        expect.assertions(3);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         tmx.setPath("test/testfiles/x.tmx");
-        test.equal(tmx.getPath(), "test/testfiles/x.tmx");
+        expect(tmx.getPath()).toBe("test/testfiles/x.tmx");
 
         tmx.setPath("asdf/asdf/y.tmx");
 
-        test.equal(tmx.getPath(), "asdf/asdf/y.tmx");
+        expect(tmx.getPath()).toBe("asdf/asdf/y.tmx");
+    });
 
-        test.done();
-    },
-
-    testTMXSetPathInitiallyEmpty: function(test) {
-        test.expect(3);
+    test("TMXSetPathInitiallyEmpty", () => {
+        expect.assertions(3);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
-        test.ok(!tmx.getPath());
+        expect(!tmx.getPath()).toBeTruthy();
 
         tmx.setPath("asdf/asdf/y.tmx");
 
-        test.equal(tmx.getPath(), "asdf/asdf/y.tmx");
+        expect(tmx.getPath()).toBe("asdf/asdf/y.tmx");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceString: function(test) {
-        test.expect(11);
+    test("TMXAddResourceString", () => {
+        expect.assertions(11);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "Asdf asdf",
@@ -150,30 +138,28 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceStringWithTranslation: function(test) {
-        test.expect(12);
+    test("TMXAddResourceStringWithTranslation", () => {
+        expect.assertions(12);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "Asdf asdf",
@@ -192,32 +178,30 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddMultipleResourceString: function(test) {
-        test.expect(19);
+    test("TMXAddMultipleResourceString", () => {
+        expect.assertions(19);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -240,43 +224,41 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.ok(!units[0].comment);
+        expect(!units[0].comment).toBeTruthy();
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.ok(!props["x-context"]);
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(!props["x-context"]).toBeTruthy();
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.ok(!units[1].comment);
+        expect(!units[1].comment).toBeTruthy();
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.ok(!props["x-context"]);
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(!props["x-context"]).toBeTruthy();
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "baby baby");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("baby baby");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddMultipleResourceStringWithTranslations: function(test) {
-        test.expect(23);
+    test("TMXAddMultipleResourceStringWithTranslations", () => {
+        expect.assertions(23);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -303,49 +285,47 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.ok(!units[0].comment);
+        expect(!units[0].comment).toBeTruthy();
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.ok(!props["x-context"]);
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(!props["x-context"]).toBeTruthy();
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.ok(!units[1].comment);
+        expect(!units[1].comment).toBeTruthy();
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.ok(!props["x-context"]);
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(!props["x-context"]).toBeTruthy();
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "baby baby");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("baby baby");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "vier fumpf sechs");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("vier fumpf sechs");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddMultipleResourceStringSameSource: function(test) {
-        test.expect(15);
+    test("TMXAddMultipleResourceStringSameSource", () => {
+        expect.assertions(15);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -372,38 +352,36 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
-        test.ok(!units[0].comment);
+        expect(!units[0].comment).toBeTruthy();
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.ok(!props["x-context"]);
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(!props["x-context"]).toBeTruthy();
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
         // should add a variant to the previous translation
         // unit instead of creating a new one
-        test.equal(variants[2].string, "un deu trois");
-        test.equal(variants[2].locale, "fr-FR");
+        expect(variants[2].string).toBe("un deu trois");
+        expect(variants[2].locale).toBe("fr-FR");
+    });
 
-        test.done();
-    },
-
-    testTMXAddMultipleResourceStringSameSourceDifferentTranslation: function(test) {
-        test.expect(14);
+    test("TMXAddMultipleResourceStringSameSourceDifferentTranslation", () => {
+        expect.assertions(14);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -432,39 +410,37 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "a");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("a");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
         // should become a new variant of the source, even
         // though we already have a german translation
-        test.equal(variants[2].string, "sieben acht neun");
-        test.equal(variants[2].locale, "de-DE");
+        expect(variants[2].string).toBe("sieben acht neun");
+        expect(variants[2].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceStringNotSourceLocale: function(test) {
-        test.expect(3);
+    test("TMXAddResourceStringNotSourceLocale", () => {
+        expect.assertions(3);
 
         const tmx = new TMX({
             locale: "en"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "Asdf asdf",
@@ -481,17 +457,15 @@ export const testTMX = {
         // should reject it. Only units with the source
         // locale of en go in this tmx
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 0);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXAddMultipleResourceStringHandleDups: function(test) {
-        test.expect(14);
+    test("TMXAddMultipleResourceStringHandleDups", () => {
+        expect.assertions(14);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -518,36 +492,34 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
         // should not duplicate the unit or the variants
 
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.ok(!props["x-context"]);
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(!props["x-context"]).toBeTruthy();
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceArray: function(test) {
-        test.expect(25);
+    test("TMXAddResourceArray", () => {
+        expect.assertions(25);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceArray({
             sourceArray: [
@@ -569,50 +541,48 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 3);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(3);
 
-        test.equal(units[0].source, "a");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("a");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "b");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("b");
+        expect(units[1].sourceLocale).toBe("en");
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("b");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[2].source, "c");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("c");
+        expect(units[2].sourceLocale).toBe("en");
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("c");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceArrayWithTranslations: function(test) {
-        test.expect(31);
+    test("TMXAddResourceArrayWithTranslations", () => {
+        expect.assertions(31);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceArray({
             sourceArray: [
@@ -640,59 +610,57 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 3);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(3);
 
-        test.equal(units[0].source, "a");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("a");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "x");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("x");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "b");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("b");
+        expect(units[1].sourceLocale).toBe("en");
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("b");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "y");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("y");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[2].source, "c");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("c");
+        expect(units[2].sourceLocale).toBe("en");
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("c");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "z");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("z");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceArrayMultiple: function(test) {
-        test.expect(31);
+    test("TMXAddResourceArrayMultiple", () => {
+        expect.assertions(31);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceArray({
             sourceArray: [
@@ -733,65 +701,63 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 6);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(6);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a");
+        expect(variants[0].locale).toBe("en");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("b");
+        expect(variants[0].locale).toBe("en");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("c");
+        expect(variants[0].locale).toBe("en");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "m");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("m");
+        expect(variants[0].locale).toBe("en");
 
         variants = units[4].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "n");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("n");
+        expect(variants[0].locale).toBe("en");
 
         variants = units[5].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "o");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("o");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceArrayMultipleWithTranslations: function(test) {
-        test.expect(43);
+    test("TMXAddResourceArrayMultipleWithTranslations", () => {
+        expect.assertions(43);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceArray({
             sourceArray: [
@@ -844,83 +810,81 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 6);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(6);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "x");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("x");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("b");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "y");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("y");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("c");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "z");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("z");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "m");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("m");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "p");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("p");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[4].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "n");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("n");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "q");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("q");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[5].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "o");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("o");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "r");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("r");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceArrayMultipleWithTranslationsAndOverlappingSources: function(test) {
-        test.expect(43);
+    test("TMXAddResourceArrayMultipleWithTranslationsAndOverlappingSources", () => {
+        expect.assertions(43);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceArray({
             sourceArray: [
@@ -973,77 +937,75 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
-        test.equal(units[0].source, "a");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("a");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "a");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "x");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("x");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(variants[2].string, "p");
-        test.equal(variants[2].locale, "de-DE");
+        expect(variants[2].string).toBe("p");
+        expect(variants[2].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "b");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("b");
+        expect(units[1].sourceLocale).toBe("en");
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "b");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("b");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "y");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("y");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(variants[2].string, "q");
-        test.equal(variants[2].locale, "de-DE");
+        expect(variants[2].string).toBe("q");
+        expect(variants[2].locale).toBe("de-DE");
 
-        test.equal(units[2].source, "c");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("c");
+        expect(units[2].sourceLocale).toBe("en");
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "c");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("c");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "z");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("z");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[3].source, "o");
-        test.equal(units[3].sourceLocale, "en");
+        expect(units[3].source).toBe("o");
+        expect(units[3].sourceLocale).toBe("en");
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "o");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("o");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "r");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("r");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourcePlural: function(test) {
-        test.expect(19);
+    test("TMXAddResourcePlural", () => {
+        expect.assertions(19);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourceStrings: {
@@ -1064,42 +1026,40 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "one string");
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("one string");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("one string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].sourceLocale, "en");
-        test.equal(units[1].source, "other string");
+        expect(units[1].sourceLocale).toBe("en");
+        expect(units[1].source).toBe("other string");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "other string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("other string");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourcePluralWithTranslations: function(test) {
-        test.expect(23);
+    test("TMXAddResourcePluralWithTranslations", () => {
+        expect.assertions(23);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourceStrings: {
@@ -1125,47 +1085,45 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "one string");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("one string");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("one string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "ein Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("ein Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "other string");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("other string");
+        expect(units[1].sourceLocale).toBe("en");
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "other string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("other string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "mehrere Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("mehrere Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourcePluralMultiple: function(test) {
-        test.expect(31);
+    test("TMXAddResourcePluralMultiple", () => {
+        expect.assertions(31);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourcePlural({
             sourceStrings: {
@@ -1204,59 +1162,57 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
-        test.equal(units[0].source, "one string");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("one string");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("one string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "other strings");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("other strings");
+        expect(units[1].sourceLocale).toBe("en");
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("other strings");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[2].source, "a string");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("a string");
+        expect(units[2].sourceLocale).toBe("en");
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "a string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[3].source, "some strings");
-        test.equal(units[3].sourceLocale, "en");
+        expect(units[3].source).toBe("some strings");
+        expect(units[3].sourceLocale).toBe("en");
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "some strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("some strings");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourcePluralMultipleWithMoreTranslations: function(test) {
-        test.expect(33);
+    test("TMXAddResourcePluralMultipleWithMoreTranslations", () => {
+        expect.assertions(33);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourcePlural({
             sourceStrings: {
@@ -1306,66 +1262,64 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("one string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "ein Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("ein Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("other strings");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "mehrere Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("mehrere Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "a string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("a string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "одна струна");
-        test.equal(variants[1].locale, "ru-RU");
+        expect(variants[1].string).toBe("одна струна");
+        expect(variants[1].locale).toBe("ru-RU");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "many strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("many strings");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "много струн");
-        test.equal(variants[1].locale, "ru-RU");
+        expect(variants[1].string).toBe("много струн");
+        expect(variants[1].locale).toBe("ru-RU");
 
-        test.equal(variants[2].string, "несколько струны");
-        test.equal(variants[2].locale, "ru-RU");
+        expect(variants[2].string).toBe("несколько струны");
+        expect(variants[2].locale).toBe("ru-RU");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourcePluralMultipleWithLessTranslations: function(test) {
-        test.expect(21);
+    test("TMXAddResourcePluralMultipleWithLessTranslations", () => {
+        expect.assertions(21);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourcePlural({
             sourceStrings: {
@@ -1413,46 +1367,44 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("one string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "ein Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("ein Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("other strings");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "mehrere Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("mehrere Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(variants[2].string, "1つの弦");
-        test.equal(variants[2].locale, "ja-JP");
+        expect(variants[2].string).toBe("1つの弦");
+        expect(variants[2].locale).toBe("ja-JP");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourcePluralMultipleWithTranslationsAndOverlappingSources: function(test) {
-        test.expect(27);
+    test("TMXAddResourcePluralMultipleWithTranslationsAndOverlappingSources", () => {
+        expect.assertions(27);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourcePlural({
             sourceStrings: {
@@ -1501,54 +1453,52 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 3);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(3);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         // the "one" string shares some translations and the "other" string doesn't
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "one string");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("one string");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eine Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eine Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(variants[2].string, "1 Zeichenfolge");
-        test.equal(variants[2].locale, "de-DE");
+        expect(variants[2].string).toBe("1 Zeichenfolge");
+        expect(variants[2].locale).toBe("de-DE");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "other strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("other strings");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "mehrere Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("mehrere Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "some other strings");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("some other strings");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "mehrere andere Zeichenfolge");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("mehrere andere Zeichenfolge");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeSimple: function(test) {
-        test.expect(1);
+    test("TMXDeserializeSimple", () => {
+        expect.assertions(1);
 
         const tmx = new TMX();
 
@@ -1570,13 +1520,11 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
+        expect(tmx.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeSimpleRightTransUnits: function(test) {
-        test.expect(6);
+    test("TMXDeserializeSimpleRightTransUnits", () => {
+        expect.assertions(6);
 
         const tmx = new TMX();
 
@@ -1598,21 +1546,19 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
+        expect(tmx.size()).toBe(1);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
 
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en-US");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en-US");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeSimpleRightVariants: function(test) {
-        test.expect(11);
+    test("TMXDeserializeSimpleRightVariants", () => {
+        expect.assertions(11);
 
         const tmx = new TMX();
 
@@ -1634,29 +1580,27 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
+        expect(tmx.size()).toBe(1);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en-US");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeSimpleHeaderProperties: function(test) {
-        test.expect(8);
+    test("TMXDeserializeSimpleHeaderProperties", () => {
+        expect.assertions(8);
 
         const tmx = new TMX();
 
@@ -1678,22 +1622,20 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
-        test.equal(tmx.getSegmentationType(), "paragraph");
+        expect(tmx.size()).toBe(1);
+        expect(tmx.getSegmentationType()).toBe("paragraph");
 
         const tmxprops = tmx.getProperties();
-        test.ok(tmxprops);
-        test.equal(tmxprops["creationtool"], "loctool");
-        test.equal(tmxprops["creationtoolversion"], "2.20.2");
-        test.equal(tmxprops["adminlang"], "en-US");
-        test.equal(tmxprops["srclang"], "en-US");
-        test.equal(tmxprops["datatype"], "javascript");
+        expect(tmxprops).toBeTruthy();
+        expect(tmxprops["creationtool"]).toBe("loctool");
+        expect(tmxprops["creationtoolversion"]).toBe("2.20.2");
+        expect(tmxprops["adminlang"]).toBe("en-US");
+        expect(tmxprops["srclang"]).toBe("en-US");
+        expect(tmxprops["datatype"]).toBe("javascript");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeUnitsSrclangIsDifferentThanHeaderSrclang: function(test) {
-        test.expect(21);
+    test("TMXDeserializeUnitsSrclangIsDifferentThanHeaderSrclang", () => {
+        expect.assertions(21);
 
         const tmx = new TMX();
 
@@ -1724,44 +1666,42 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
-        test.equal(tmx.sourceLocale, "en-US");
+        expect(tmx.size()).toBe(2);
+        expect(tmx.sourceLocale).toBe("en-US");
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[1].sourceLocale).toBe("en");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Foobar");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Foobar");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Das Foobar");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Das Foobar");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeNoSrclangHeaderAttrAtAll: function(test) {
-        test.expect(21);
+    test("TMXDeserializeNoSrclangHeaderAttrAtAll", () => {
+        expect.assertions(21);
 
         const tmx = new TMX();
 
@@ -1792,44 +1732,42 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
-        test.equal(tmx.sourceLocale, "en");
+        expect(tmx.size()).toBe(2);
+        expect(tmx.sourceLocale).toBe("en");
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[1].sourceLocale).toBe("en");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Foobar");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Foobar");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Das Foobar");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Das Foobar");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeRightDatatype: function(test) {
-        test.expect(7);
+    test("TMXDeserializeRightDatatype", () => {
+        expect.assertions(7);
 
         const tmx = new TMX();
 
@@ -1860,22 +1798,20 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
-        test.equal(tmx.sourceLocale, "en-US");
+        expect(tmx.size()).toBe(2);
+        expect(tmx.sourceLocale).toBe("en-US");
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].datatype, "javascript");
-        test.equal(units[1].datatype, "javascript");
+        expect(units[0].datatype).toBe("javascript");
+        expect(units[1].datatype).toBe("javascript");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeSimpleTransUnitProperties: function(test) {
-        test.expect(6);
+    test("TMXDeserializeSimpleTransUnitProperties", () => {
+        expect.assertions(6);
 
         const tmx = new TMX();
 
@@ -1897,22 +1833,20 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 1);
+        expect(tmx.size()).toBe(1);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
 
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeStringMultipleWithTranslations: function(test) {
-        test.expect(1);
+    test("TMXDeserializeStringMultipleWithTranslations", () => {
+        expect.assertions(1);
 
         const tmx = new TMX();
 
@@ -1989,13 +1923,11 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 6);
+        expect(tmx.size()).toBe(6);
+    });
 
-        test.done();
-    },
-
-    testTMXDeserializeStringMultipleWithTranslationsRightContents: function(test) {
-        test.expect(6);
+    test("TMXDeserializeStringMultipleWithTranslationsRightContents", () => {
+        expect.assertions(6);
 
         const tmx = new TMX();
 
@@ -2072,12 +2004,12 @@ export const testTMX = {
 
         tmx.deserialize(contents);
 
-        test.ok(tmx.size(), 6);
+        expect(tmx.size()).toBe(6);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 6);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(6);
 
         let actual = units.map(tu => [tu.source, tu.sourceLocale]);
         let expected = [
@@ -2088,7 +2020,7 @@ export const testTMX = {
             ["b", "en-US"],
             ["c", "en-US"]
         ];
-        test.equalIgnoringOrder(actual, expected);
+        expect(actual).toEqual(expected);
 
         actual = units.map(tu => {
             const variants = tu.getVariants();
@@ -2102,16 +2034,14 @@ export const testTMX = {
             [["b", "en-US"], ["y", "de-DE"]],
             [["c", "en-US"], ["z", "de-DE"]]
         ];
-        test.equalIgnoringOrder(actual, expected);
+        expect(actual).toEqual(expected);
+    });
 
-        test.done();
-    },
-
-    testTMXSerializeStringMultipleWithTranslations: function(test) {
-        test.expect(2);
+    test("TMXSerializeStringMultipleWithTranslations", () => {
+        expect.assertions(2);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -2170,15 +2100,14 @@ export const testTMX = {
             '</tmx>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
-        test.done();
-    },
+        expect(actual).toBe(expected);
+    });
 
-    testTMXSerializeString: function(test) {
-        test.expect(2);
+    test("TMXSerializeString", () => {
+        expect.assertions(2);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -2231,16 +2160,14 @@ export const testTMX = {
             '</tmx>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testTMXSerializeComplex: function(test) {
-        test.expect(2);
+    test("TMXSerializeComplex", () => {
+        expect.assertions(2);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -2375,18 +2302,16 @@ export const testTMX = {
             '</tmx>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceSource: function(test) {
-        test.expect(23);
+    test("TMXAddResourceSegmentSentenceSource", () => {
+        expect.assertions(23);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "This is a test. This is only a test.",
@@ -2404,49 +2329,47 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceSourceTricky: function(test) {
-        test.expect(23);
+    test("TMXAddResourceSegmentSentenceSourceTricky", () => {
+        expect.assertions(23);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "I would like to see Dr. Smith in the U.S. not someone else. Please arrange that.",
@@ -2464,49 +2387,47 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "I would like to see Dr. Smith in the U.S. not someone else.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("I would like to see Dr. Smith in the U.S. not someone else.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "I would like to see Dr. Smith in the U.S. not someone else.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("I would like to see Dr. Smith in the U.S. not someone else.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "Please arrange that.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("Please arrange that.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "Please arrange that.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Please arrange that.");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceSourceOnlyOneSentence: function(test) {
-        test.expect(13);
+    test("TMXAddResourceSegmentSentenceSourceOnlyOneSentence", () => {
+        expect.assertions(13);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "This is a test.",
@@ -2524,34 +2445,32 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTarget: function(test) {
-        test.expect(27);
+    test("TMXAddResourceSegmentSentenceTarget", () => {
+        expect.assertions(27);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "This is a test. This is only a test.",
@@ -2571,55 +2490,53 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist nur eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetJapanese: function(test) {
-        test.expect(27);
+    test("TMXAddResourceSegmentSentenceTargetJapanese", () => {
+        expect.assertions(27);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "This is a test. This is only a test.",
@@ -2639,55 +2556,53 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "これはテストです。");
-        test.equal(variants[1].locale, "ja-JP");
+        expect(variants[1].string).toBe("これはテストです。");
+        expect(variants[1].locale).toBe("ja-JP");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "これは単なるテストです。");
-        test.equal(variants[1].locale, "ja-JP");
+        expect(variants[1].string).toBe("これは単なるテストです。");
+        expect(variants[1].locale).toBe("ja-JP");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetOnlyOneSentence: function(test) {
-        test.expect(15);
+    test("TMXAddResourceSegmentSentenceTargetOnlyOneSentence", () => {
+        expect.assertions(15);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "This is a test.",
@@ -2707,37 +2622,35 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(1);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         const props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceArray: function(test) {
-        test.expect(23);
+    test("TMXAddResourceSegmentSentenceArray", () => {
+        expect.assertions(23);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceArray({
             sourceArray: [
@@ -2757,49 +2670,47 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetArray: function(test) {
-        test.expect(27);
+    test("TMXAddResourceSegmentSentenceTargetArray", () => {
+        expect.assertions(27);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceArray({
             sourceArray: [
@@ -2823,55 +2734,53 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist nur eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetArrayMultiple: function(test) {
-        test.expect(51);
+    test("TMXAddResourceSegmentSentenceTargetArrayMultiple", () => {
+        expect.assertions(51);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceArray({
             sourceArray: [
@@ -2897,91 +2806,89 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist nur eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[2].source, "Yet another test.");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("Yet another test.");
+        expect(units[2].sourceLocale).toBe("en");
         props = units[2].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Yet another test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Yet another test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Jemals noch eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Jemals noch eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[3].source, "Another test.");
-        test.equal(units[3].sourceLocale, "en");
+        expect(units[3].source).toBe("Another test.");
+        expect(units[3].sourceLocale).toBe("en");
         props = units[3].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Another test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Another test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Noch eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Noch eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentencePlural: function(test) {
-        test.expect(23);
+    test("TMXAddResourceSegmentSentencePlural", () => {
+        expect.assertions(23);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourcePlurals: {
@@ -3001,49 +2908,47 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetPlural: function(test) {
-        test.expect(27);
+    test("TMXAddResourceSegmentSentenceTargetPlural", () => {
+        expect.assertions(27);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourcePlurals: {
@@ -3067,55 +2972,53 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist nur eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetPluralMultiple: function(test) {
-        test.expect(51);
+    test("TMXAddResourceSegmentSentenceTargetPluralMultiple", () => {
+        expect.assertions(51);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourcePlurals: {
@@ -3141,91 +3044,89 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Dies ist nur eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Dies ist nur eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[2].source, "Yet another test.");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("Yet another test.");
+        expect(units[2].sourceLocale).toBe("en");
         props = units[2].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Yet another test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Yet another test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Jemals noch eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Jemals noch eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[3].source, "Another test.");
-        test.equal(units[3].sourceLocale, "en");
+        expect(units[3].source).toBe("Another test.");
+        expect(units[3].sourceLocale).toBe("en");
         props = units[3].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Another test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Another test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Noch eine Untersuchung.");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("Noch eine Untersuchung.");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetPluralLessCategories: function(test) {
-        test.expect(47);
+    test("TMXAddResourceSegmentSentenceTargetPluralLessCategories", () => {
+        expect.assertions(47);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourcePlurals: {
@@ -3250,85 +3151,83 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(units[2].source, "Yet another test.");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("Yet another test.");
+        expect(units[2].sourceLocale).toBe("en");
         props = units[2].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Yet another test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Yet another test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "さらに別のテスト。");
-        test.equal(variants[1].locale, "ja-JP");
+        expect(variants[1].string).toBe("さらに別のテスト。");
+        expect(variants[1].locale).toBe("ja-JP");
 
-        test.equal(units[3].source, "Another test.");
-        test.equal(units[3].sourceLocale, "en");
+        expect(units[3].source).toBe("Another test.");
+        expect(units[3].sourceLocale).toBe("en");
         props = units[3].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Another test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("Another test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "別のテスト。");
-        test.equal(variants[1].locale, "ja-JP");
+        expect(variants[1].string).toBe("別のテスト。");
+        expect(variants[1].locale).toBe("ja-JP");
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetPluralMoreCategories: function(test) {
-        test.expect(55);
+    test("TMXAddResourceSegmentSentenceTargetPluralMoreCategories", () => {
+        expect.assertions(55);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourcePlural({
             sourcePlurals: {
@@ -3355,97 +3254,95 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 4);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(4);
 
-        test.equal(units[0].source, "This is a test.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("This is a test.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Это тест.");
-        test.equal(variants[1].locale, "ru-RU");
+        expect(variants[1].string).toBe("Это тест.");
+        expect(variants[1].locale).toBe("ru-RU");
 
-        test.equal(units[1].source, "This is only a test.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("This is only a test.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "This is only a test.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("This is only a test.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Это всего лишь тест.");
-        test.equal(variants[1].locale, "ru-RU");
+        expect(variants[1].string).toBe("Это всего лишь тест.");
+        expect(variants[1].locale).toBe("ru-RU");
 
-        test.equal(units[2].source, "These are some tests.");
-        test.equal(units[2].sourceLocale, "en");
+        expect(units[2].source).toBe("These are some tests.");
+        expect(units[2].sourceLocale).toBe("en");
         props = units[2].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "These are some tests.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("These are some tests.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Это некоторые тестов.");
-        test.equal(variants[1].locale, "ru-RU");
+        expect(variants[1].string).toBe("Это некоторые тестов.");
+        expect(variants[1].locale).toBe("ru-RU");
 
-        test.equal(variants[2].string, "Это некоторые теста.");
-        test.equal(variants[2].locale, "ru-RU");
+        expect(variants[2].string).toBe("Это некоторые теста.");
+        expect(variants[2].locale).toBe("ru-RU");
 
-        test.equal(units[3].source, "These are only some tests.");
-        test.equal(units[3].sourceLocale, "en");
+        expect(units[3].source).toBe("These are only some tests.");
+        expect(units[3].sourceLocale).toBe("en");
         props = units[3].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[3].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].string, "These are only some tests.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("These are only some tests.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Это только некоторые тестов.");
-        test.equal(variants[1].locale, "ru-RU");
+        expect(variants[1].string).toBe("Это только некоторые тестов.");
+        expect(variants[1].locale).toBe("ru-RU");
 
-        test.equal(variants[2].string, "Это только некоторые теста.");
-        test.equal(variants[2].locale, "ru-RU");
+        expect(variants[2].string).toBe("Это только некоторые теста.");
+        expect(variants[2].locale).toBe("ru-RU");
+    });
 
-        test.done();
-    },
-
-    testTMXWrite: function(test) {
-        test.expect(4);
+    test("TMXWrite", () => {
+        expect.assertions(4);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf. Foobar foo.",
@@ -3513,12 +3410,12 @@ export const testTMX = {
             fs.unlinkSync(path.join(base, "testfiles/test/output.tmx"));
         }
 
-        test.ok(!fs.existsSync(path.join(base, "testfiles/test/output.tmx")));
+        expect(!fs.existsSync(path.join(base, "testfiles/test/output.tmx"))).toBeTruthy();
 
         tmx.setPath("./test/output.tmx");
         tmx.write(path.join(base, "testfiles"));
 
-        test.ok(fs.existsSync(path.join(base, "testfiles/test/output.tmx")));
+        expect(fs.existsSync(path.join(base, "testfiles/test/output.tmx"))).toBeTruthy();
 
         const actual = fs.readFileSync(path.join(base, "testfiles/test/output.tmx"), "utf-8");
         const expected =
@@ -3614,18 +3511,16 @@ export const testTMX = {
             '</tmx>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testTMXAddResourceSegmentSentenceTargetSpecial: function(test) {
-        test.expect(27);
+    test("TMXAddResourceSegmentSentenceTargetSpecial", () => {
+        expect.assertions(27);
 
         const tmx = new TMX({
             segmentation: "sentence"
         });
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const res = new ResourceString({
             source: "The SignRequest subdomain cannot be changed. If you need a different domain you can create a new team.",
@@ -3645,53 +3540,51 @@ export const testTMX = {
         tmx.addResource(res);
 
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.equal(units.length, 2);
+        expect(units).toBeTruthy();
+        expect(units.length).toBe(2);
 
-        test.equal(units[0].source, "The SignRequest subdomain cannot be changed.");
-        test.equal(units[0].sourceLocale, "en");
+        expect(units[0].source).toBe("The SignRequest subdomain cannot be changed.");
+        expect(units[0].sourceLocale).toBe("en");
         let props = units[0].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "The SignRequest subdomain cannot be changed.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("The SignRequest subdomain cannot be changed.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "SignRequest domänen kan inte ändras.");
-        test.equal(variants[1].locale, "sv");
+        expect(variants[1].string).toBe("SignRequest domänen kan inte ändras.");
+        expect(variants[1].locale).toBe("sv");
 
-        test.equal(units[1].source, "If you need a different domain you can create a new team.");
-        test.equal(units[1].sourceLocale, "en");
+        expect(units[1].source).toBe("If you need a different domain you can create a new team.");
+        expect(units[1].sourceLocale).toBe("en");
         props = units[1].getProperties();
-        test.ok(props);
-        test.equal(props["x-project"], "webapp");
-        test.equal(props["x-context"], "asdf");
-        test.equal(props["x-flavor"], "chocolate");
+        expect(props).toBeTruthy();
+        expect(props["x-project"]).toBe("webapp");
+        expect(props["x-context"]).toBe("asdf");
+        expect(props["x-flavor"]).toBe("chocolate");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "If you need a different domain you can create a new team.");
-        test.equal(variants[0].locale, "en");
+        expect(variants[0].string).toBe("If you need a different domain you can create a new team.");
+        expect(variants[0].locale).toBe("en");
 
-        test.equal(variants[1].string, "Om du behöver en annan domän kan du skapa en nya arbetsgrupp.");
-        test.equal(variants[1].locale, "sv");
+        expect(variants[1].string).toBe("Om du behöver en annan domän kan du skapa en nya arbetsgrupp.");
+        expect(variants[1].locale).toBe("sv");
+    });
 
-        test.done();
-    },
-
-    testTMXSerializeStringDontSerializeUnitsWithNoTranslations: function(test) {
-        test.expect(2);
+    test("TMXSerializeStringDontSerializeUnitsWithNoTranslations", () => {
+        expect.assertions(2);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -3756,8 +3649,6 @@ export const testTMX = {
             '</tmx>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
-
-        test.done();
-    }
-};
+        expect(actual).toBe(expected);
+    });
+});
