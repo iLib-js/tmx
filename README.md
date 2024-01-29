@@ -8,7 +8,7 @@ Full API documentation can be found [here](./docs/ilibTmx.md).
 
 ## License
 
-Copyright © 2023, JEDLSoft
+Copyright © 2023-2024, JEDLSoft
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,6 +24,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ## Release Notes
+
+### v1.1.2
+
+- converted all unit tests from nodeunit to jest
+- now only supports node >= v14.0.0
 
 ### v1.1.1
 

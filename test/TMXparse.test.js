@@ -1,7 +1,7 @@
 /*
- * testTMXparse.js - test the parsing capabilities of the TMX object.
+ * TMXparse.test.js - test the parsing capabilities of the TMX object.
  *
- * Copyright © 2023 Box, Inc.
+ * Copyright © 2024 Box, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,12 @@ function diff(a, b) {
     }
 }
 
-export const testTMXparse = {
-    testTMXParse: function(test) {
-        test.expect(4);
+describe("testTMXparse", () => {
+    test("TMXParse", () => {
+        expect.assertions(4);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -63,18 +63,16 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXParseRightUnits: function(test) {
-        test.expect(10);
+    test("TMXParseRightUnits", () => {
+        expect.assertions(10);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -95,29 +93,27 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en-US");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en-US");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en-US");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXParseManyVariants: function(test) {
-        test.expect(14);
+    test("TMXParseManyVariants", () => {
+        expect.assertions(14);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -144,35 +140,33 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.equal(units[0].source, "one two three");
-        test.equal(units[0].sourceLocale, "en-US");
+        expect(units[0].source).toBe("one two three");
+        expect(units[0].sourceLocale).toBe("en-US");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 4);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(4);
 
-        test.equal(variants[0].string, "one two three");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("one two three");
+        expect(variants[0].locale).toBe("en-US");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(variants[2].string, "un deu trois");
-        test.equal(variants[2].locale, "fr-FR");
+        expect(variants[2].string).toBe("un deu trois");
+        expect(variants[2].locale).toBe("fr-FR");
 
-        test.equal(variants[3].string, "uno dos tres");
-        test.equal(variants[3].locale, "es-ES");
+        expect(variants[3].string).toBe("uno dos tres");
+        expect(variants[3].locale).toBe("es-ES");
+    });
 
-        test.done();
-    },
-
-    testTMXParseHeaders: function(test) {
-        test.expect(8);
+    test("TMXParseHeaders", () => {
+        expect.assertions(8);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -195,23 +189,21 @@ export const testTMXparse = {
         tmx.deserialize(xml);
         const props = tmx.getProperties();
 
-        test.equal(props.segtype, "asdf");
-        test.equal(props.creationtool, "mytool");
-        test.equal(props.creationtoolversion, "1.2.3");
-        test.equal(props.adminlang, "en-US");
-        test.equal(props.srclang, "de-DE");
-        test.equal(props.datatype, "golang");
+        expect(props.segtype).toBe("asdf");
+        expect(props.creationtool).toBe("mytool");
+        expect(props.creationtoolversion).toBe("1.2.3");
+        expect(props.adminlang).toBe("en-US");
+        expect(props.srclang).toBe("de-DE");
+        expect(props.datatype).toBe("golang");
 
-        test.equal(tmx.sourceLocale, "de-DE");
+        expect(tmx.sourceLocale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXParseProperties: function(test) {
-        test.expect(3);
+    test("TMXParseProperties", () => {
+        expect.assertions(3);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -233,20 +225,19 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.deepEqual(units[0].getProperties(), {
+        expect(units[0].getProperties()).toStrictEqual({
             "x-project": "webapp",
             "datatype": "java"
         });
-        test.done();
-    },
+    });
 
-    testTMXParseNotes: function(test) {
-        test.expect(3);
+    test("TMXParseNotes", () => {
+        expect.assertions(3);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -268,17 +259,16 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.deepEqual(units[0].comment, "This is a comment");
-        test.done();
-    },
+        expect(units[0].comment).toStrictEqual("This is a comment");
+    });
 
-    testTMXParseDifferentVersion: function(test) {
-        test.expect(4);
+    test("TMXParseDifferentVersion", () => {
+        expect.assertions(4);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -300,18 +290,16 @@ export const testTMXparse = {
         // cannot parse tmx > v1.4 files
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 0);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXParseMultipleUnits: function(test) {
-        test.expect(18);
+    test("TMXParseMultipleUnits", () => {
+        expect.assertions(18);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -341,42 +329,40 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en-US");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en-US");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en-US");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
 
-        test.equal(units[1].source, "seven ate nine");
-        test.equal(units[1].sourceLocale, "en-US");
+        expect(units[1].source).toBe("seven ate nine");
+        expect(units[1].sourceLocale).toBe("en-US");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "seven ate nine");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("seven ate nine");
+        expect(variants[0].locale).toBe("en-US");
 
-        test.equal(variants[1].string, "sieben acht neun");
-        test.equal(variants[1].locale, "de-DE");
+        expect(variants[1].string).toBe("sieben acht neun");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTMXParseNoTranslations: function(test) {
-        test.expect(8);
+    test("TMXParseNoTranslations", () => {
+        expect.assertions(8);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -394,26 +380,24 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en-US");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en-US");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 1);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en-US");
+    });
 
-        test.done();
-    },
-
-    testTMXParseLangAttrs: function(test) {
-        test.expect(10);
+    test("TMXParseLangAttrs", () => {
+        expect.assertions(10);
 
         const tmx = new TMX();
-        test.ok(tmx);
+        expect(tmx).toBeTruthy();
 
         const xml = `
             <?xml version="1.0" encoding="utf-8"?>
@@ -434,23 +418,21 @@ export const testTMXparse = {
 
         tmx.deserialize(xml);
         const units = tmx.getTranslationUnits();
-        test.ok(units);
+        expect(units).toBeTruthy();
 
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[0].sourceLocale, "en-US");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en-US");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.equal(variants.length, 2);
+        expect(variants).toBeTruthy();
+        expect(variants.length).toBe(2);
 
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[0].locale, "en-US");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[0].locale).toBe("en-US");
 
-        test.equal(variants[1].string, "eins zwei drei");
-        test.equal(variants[1].locale, "de-DE");
-
-        test.done();
-    },
+        expect(variants[1].string).toBe("eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+    });
 
 
-};
+});

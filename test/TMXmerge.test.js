@@ -1,7 +1,7 @@
 /*
- * testTMXmerge.js - test the TMX merge method.
+ * TMXmerge.test.js - test the TMX merge method.
  *
- * Copyright © 2023 Box, Inc.
+ * Copyright © 2024 Box, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import path from 'node:path';
-import fs from 'node:fs';
+import path from 'path';
+import fs from 'fs';
 import {
     ResourceString,
     ResourceArray,
@@ -45,28 +45,26 @@ function diff(a, b) {
 
 const loctoolVersion = JSON.parse(fs.readFileSync(Path.join(__dirname, "..", "package.json"), "utf-8")).version;
 
-export const testTMXmerge = {
-    testTMXMergeEmpty: function(test) {
-        test.expect(4);
+describe("testTMXmerge", () => {
+    test("TMXMergeEmpty", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         const d = tmx1.merge([tmx2]);
 
-        test.ok(d);
-        test.equal(d.size(), 0);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeNothing: function(test) {
-        test.expect(3);
+    test("TMXMergeNothing", () => {
+        expect.assertions(3);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -82,19 +80,17 @@ export const testTMXmerge = {
 
         const d = tmx1.merge();
 
-        test.ok(d);
-        test.equal(d.size(), 1);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeNoDiff: function(test) {
-        test.expect(4);
+    test("TMXMergeNoDiff", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -112,19 +108,17 @@ export const testTMXmerge = {
         // they have the same strings in them, so there should be only one unit in the output
         const d = tmx1.merge([tmx2]);
 
-        test.ok(d);
-        test.equal(d.size(), 1);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringInTarget: function(test) {
-        test.expect(4);
+    test("TMXMergeAdditionalStringInTarget", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -151,19 +145,17 @@ export const testTMXmerge = {
         tmx2.addResource(res);
 
         const d = tmx1.merge([tmx2]);
-        test.ok(d);
-        test.equal(d.size(), 2);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringRightContentsInTarget: function(test) {
-        test.expect(23);
+    test("TMXMergeAdditionalStringRightContentsInTarget", () => {
+        expect.assertions(23);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -192,42 +184,40 @@ export const testTMXmerge = {
         const d = tmx1.merge([tmx2]);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 2);
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en");
-        test.equal(units[1].source, "foobar foo");
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(2);
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[1].sourceLocale).toBe("en");
+        expect(units[1].source).toBe("foobar foo");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "eins zwei drei");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "foobar foo");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "das foobar");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("foobar foo");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("das foobar");
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalVariantInTarget: function(test) {
-        test.expect(4);
+    test("TMXMergeAdditionalVariantInTarget", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -254,19 +244,17 @@ export const testTMXmerge = {
         tmx2.addResource(res);
 
         const d = tmx1.merge([tmx2]);
-        test.ok(d);
-        test.equal(d.size(), 1);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalVariantRightContentsInTarget: function(test) {
-        test.expect(16);
+    test("TMXMergeAdditionalVariantRightContentsInTarget", () => {
+        expect.assertions(16);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -295,38 +283,36 @@ export const testTMXmerge = {
         const d = tmx1.merge([tmx2]);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
 
         // source is the same, but the variants differ
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
 
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
 
-        test.equal(variants[2].locale, "fr-FR");
-        test.equal(variants[2].string, "un deux trois");
+        expect(variants[2].locale).toBe("fr-FR");
+        expect(variants[2].string).toBe("un deux trois");
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringInSource: function(test) {
-        test.expect(4);
+    test("TMXMergeAdditionalStringInSource", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -353,19 +339,17 @@ export const testTMXmerge = {
         tmx1.addResource(res);
 
         const d = tmx1.merge([tmx2]);
-        test.ok(d);
-        test.equal(d.size(), 2);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringRightContentsInSource: function(test) {
-        test.expect(23);
+    test("TMXMergeAdditionalStringRightContentsInSource", () => {
+        expect.assertions(23);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -394,42 +378,40 @@ export const testTMXmerge = {
         const d = tmx1.merge([tmx2]);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 2);
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en");
-        test.equal(units[1].source, "foobar foo");
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(2);
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[1].sourceLocale).toBe("en");
+        expect(units[1].source).toBe("foobar foo");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "eins zwei drei");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "foobar foo");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "das foobar");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("foobar foo");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("das foobar");
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalVariantInSource: function(test) {
-        test.expect(4);
+    test("TMXMergeAdditionalVariantInSource", () => {
+        expect.assertions(4);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -456,19 +438,17 @@ export const testTMXmerge = {
         tmx1.addResource(res);
 
         const d = tmx1.merge([tmx2]);
-        test.ok(d);
-        test.equal(d.size(), 1);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalVariantRightContentsInSource: function(test) {
-        test.expect(16);
+    test("TMXMergeAdditionalVariantRightContentsInSource", () => {
+        expect.assertions(16);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -497,40 +477,38 @@ export const testTMXmerge = {
         const d = tmx1.merge([tmx2]);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 1);
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(1);
 
         // source is the same, but the variants differ
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
 
         const variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 3);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(3);
 
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
 
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "eins zwei drei");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
 
-        test.equal(variants[2].locale, "fr-FR");
-        test.equal(variants[2].string, "un deux trois");
+        expect(variants[2].locale).toBe("fr-FR");
+        expect(variants[2].string).toBe("un deux trois");
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringInMultipleTargets: function(test) {
-        test.expect(5);
+    test("TMXMergeAdditionalStringInMultipleTargets", () => {
+        expect.assertions(5);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
         const tmx3 = new TMX();
-        test.ok(tmx3);
+        expect(tmx3).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -568,21 +546,19 @@ export const testTMXmerge = {
         tmx3.addResource(res);
 
         const d = tmx1.merge([tmx2, tmx3]);
-        test.ok(d);
-        test.equal(d.size(), 3);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringRightContentsInMultipleTargets: function(test) {
-        test.expect(32);
+    test("TMXMergeAdditionalStringRightContentsInMultipleTargets", () => {
+        expect.assertions(33);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
         const tmx3 = new TMX();
-        test.ok(tmx3);
+        expect(tmx3).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -622,55 +598,53 @@ export const testTMXmerge = {
         const d = tmx1.merge([tmx2, tmx3]);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 3);
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en");
-        test.equal(units[1].source, "foobar foo");
-        test.equal(units[2].sourceLocale, "en");
-        test.equal(units[2].source, "seven eight nine");
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(3);
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[1].sourceLocale).toBe("en");
+        expect(units[1].source).toBe("foobar foo");
+        expect(units[2].sourceLocale).toBe("en");
+        expect(units[2].source).toBe("seven eight nine");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "eins zwei drei");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "foobar foo");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "das foobar");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("foobar foo");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("das foobar");
 
         variants = units[2].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "seven eight nine");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "sieben acht neun");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("seven eight nine");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("sieben acht neun");
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringInMultipleTargetsMergeVariants: function(test) {
-        test.expect(5);
+    test("TMXMergeAdditionalStringInMultipleTargetsMergeVariants", () => {
+        expect.assertions(5);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
         const tmx3 = new TMX();
-        test.ok(tmx3);
+        expect(tmx3).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -708,21 +682,19 @@ export const testTMXmerge = {
         tmx3.addResource(res);
 
         const d = tmx1.merge([tmx2, tmx3]);
-        test.ok(d);
-        test.equal(d.size(), 2);
+        expect(d).toBeTruthy();
+        expect(d.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTMXMergeAdditionalStringRightContentsInMultipleTargets: function(test) {
-        test.expect(28);
+    test("TMXMergeAdditionalStringRightContentsInMultipleTargets", () => {
+        expect.assertions(28);
 
         const tmx1 = new TMX();
-        test.ok(tmx1);
+        expect(tmx1).toBeTruthy();
         const tmx2 = new TMX();
-        test.ok(tmx2);
+        expect(tmx2).toBeTruthy();
         const tmx3 = new TMX();
-        test.ok(tmx3);
+        expect(tmx3).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -773,36 +745,34 @@ export const testTMXmerge = {
         const d = tmx1.merge([tmx2, tmx3]);
 
         const units = d.getTranslationUnits();
-        test.ok(units);
-        test.ok(Array.isArray(units));
-        test.equal(units.length, 2);
-        test.equal(units[0].sourceLocale, "en");
-        test.equal(units[0].source, "Asdf asdf");
-        test.equal(units[1].sourceLocale, "en");
-        test.equal(units[1].source, "foobar foo");
+        expect(units).toBeTruthy();
+        expect(Array.isArray(units)).toBeTruthy();
+        expect(units.length).toBe(2);
+        expect(units[0].sourceLocale).toBe("en");
+        expect(units[0].source).toBe("Asdf asdf");
+        expect(units[1].sourceLocale).toBe("en");
+        expect(units[1].source).toBe("foobar foo");
 
         let variants = units[0].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "Asdf asdf");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "eins zwei drei");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("Asdf asdf");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("eins zwei drei");
 
         variants = units[1].getVariants();
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 4);
-        test.equal(variants[0].locale, "en");
-        test.equal(variants[0].string, "foobar foo");
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "das foobar");
-        test.equal(variants[2].locale, "de-DE");
-        test.equal(variants[2].string, "andere Zeichenfolge");
-        test.equal(variants[3].locale, "fr-FR");
-        test.equal(variants[3].string, "un foobar");
-
-        test.done();
-    },
-};
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(4);
+        expect(variants[0].locale).toBe("en");
+        expect(variants[0].string).toBe("foobar foo");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("das foobar");
+        expect(variants[2].locale).toBe("de-DE");
+        expect(variants[2].string).toBe("andere Zeichenfolge");
+        expect(variants[3].locale).toBe("fr-FR");
+        expect(variants[3].string).toBe("un foobar");
+    });
+});
