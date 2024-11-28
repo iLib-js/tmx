@@ -568,7 +568,7 @@ class TMX {
                     if (unit.tuv) {
                         const variants = makeArray(unit.tuv);
                         variants.forEach(variant => {
-                            let locale, string;
+                            let locale, string, pre, post;
                             if (variant._attributes) {
                                 if (variant._attributes.lang) {
                                     locale = variant._attributes.lang;
@@ -581,6 +581,16 @@ class TMX {
                             if (variant.seg) {
                                 string = variant.seg._text;
                             }
+                            if(variant.prop){
+                                const props = makeArray(variant.prop)
+                                props.forEach((prop)=>{
+                                    if(prop._attributes.type === "x-context-post") {
+                                        post = prop._text
+                                    }else if(prop._attributes.type === "x-context-pre"){
+                                        pre = prop._text
+                                    }
+                                })
+                            }
                             if (locale && string) {
                                 const variant = new TranslationVariant({
                                     locale,
@@ -591,6 +601,22 @@ class TMX {
                                     tu.source = variant.string;
                                     tu.sourceLocale = variant.locale;
                                 }
+                            }
+                            if(pre){
+                                const parsedPre = xmljs.xml2js(pre, {
+                                    trim: false,
+                                    nativeTypeAttribute: true,
+                                    compact: true
+                                });
+                                tu.pre = parsedPre.seg._text.trimStart()
+                            }
+                            if(post){
+                                const parsedPost = xmljs.xml2js(post, {
+                                    trim: false,
+                                    nativeTypeAttribute: true,
+                                    compact: true
+                                });
+                                tu.post = parsedPost.seg._text.trimStart()
                             }
                         });
                     }
